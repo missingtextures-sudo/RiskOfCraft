@@ -1,0 +1,36 @@
+{
+  "sheet": "protocol_regions",
+  "about": "The shared-memory map. One row per region: where it starts, how big it is, who writes it, and its shape. Rings have u64 head @0x00, u64 tail @0x40 and data @0x80. entries x entry_struct (entry rings) or bytes (byte rings, slots).",
+  "columns": ["id", "offset", "bytes", "writer", "shape", "entries", "entry_struct", "note"],
+  "rows": [
+    {"id": "Header",        "offset": "0x0",       "bytes": "0x20",                 "writer": "both",  "shape": "fixed",   "entries": 0,    "entry_struct": "Header",         "note": "magic, version, pids, heartbeats"},
+    {"id": "HostState",     "offset": "0x100",     "bytes": "0x40",                 "writer": "host",  "shape": "seqlock", "entries": 0,    "entry_struct": "HostState",      "note": "written every host frame"},
+    {"id": "GuestState",    "offset": "0x200",     "bytes": "0xC8",                 "writer": "guest", "shape": "seqlock", "entries": 0,    "entry_struct": "GuestState",     "note": ""},
+    {"id": "OverlayCtl",    "offset": "0x300",     "bytes": "0x10",                 "writer": "both",  "shape": "triple",  "entries": 0,    "entry_struct": "-",              "note": "u32 state (middle slot | dirty), u64 framesPublished"},
+    {"id": "OverlaySlotHdr","offset": "0x340",     "bytes": "0xC0",                 "writer": "guest", "shape": "triple",  "entries": 3,    "entry_struct": "OverlaySlotHdr", "note": ""},
+    {"id": "WaterGrid",     "offset": "0x400",     "bytes": "0x410",                "writer": "host",  "shape": "seqlock", "entries": 0,    "entry_struct": "-",              "note": "unused by RoR2 (no swimmable water); cleared at start"},
+    {"id": "InputRing",     "offset": "0x1000",    "bytes": "0x10080",              "writer": "host",  "shape": "entry",   "entries": 4096, "entry_struct": "InputEvent",     "note": ""},
+    {"id": "ActorTable",    "offset": "0x12000",   "bytes": "0x4040",               "writer": "host",  "shape": "seqlock", "entries": 256,  "entry_struct": "ActorRecord",    "note": "u32 seq, u32 count, records at 0x40"},
+    {"id": "EventRing",     "offset": "0x17000",   "bytes": "0x4080",               "writer": "guest", "shape": "entry",   "entries": 512,  "entry_struct": "GuestEvent",     "note": ""},
+    {"id": "CommandRing",   "offset": "0x1B100",   "bytes": "0xC80",                "writer": "host",  "shape": "entry",   "entries": 16,   "entry_struct": "HostCommand",    "note": "new in protocol 12: Minecraft commands the guest runs as the player"},
+    {"id": "WorldEntities", "offset": "0x1C000",   "bytes": "0x3C40",               "writer": "guest", "shape": "seqlock", "entries": 160,  "entry_struct": "WorldEntity",    "note": "u32 seq, u32 count, u32 hasSelection, f32 selMin[3], selMax[3], records at 0x40"},
+    {"id": "CollisionRing", "offset": "0x20000",   "bytes": "0x2000000",            "writer": "host",  "shape": "byte",    "entries": 0,    "entry_struct": "MsgHeader",      "note": "32 MB"},
+    {"id": "OverlayPixels", "offset": "0x2020000", "bytes": "0x5EEC000",            "writer": "guest", "shape": "triple",  "entries": 3,    "entry_struct": "-",              "note": "3 slots of 3840x2160 RGBA"},
+    {"id": "RenderRing",    "offset": "0x7F0C000", "bytes": "0x4000000",            "writer": "guest", "shape": "byte",    "entries": 0,    "entry_struct": "MsgHeader",      "note": "64 MB"}
+  ],
+  "constants": {
+    "columns": ["id", "value", "note"],
+    "rows": [
+      {"id": "Magic",        "value": "0x43594B53",            "note": "SKYC"},
+      {"id": "Version",      "value": "12",                    "note": "11 + the command ring"},
+      {"id": "MappingName",  "value": "Local\\RiskOfCraft_v1", "note": "the guest gets it as -Dskycraft.link"},
+      {"id": "MappingBytes", "value": "0xBF0C000",             "note": "RenderRing end"},
+      {"id": "RingHeadOff",  "value": "0x00",                  "note": ""},
+      {"id": "RingTailOff",  "value": "0x40",                  "note": ""},
+      {"id": "RingDataOff",  "value": "0x80",                  "note": ""},
+      {"id": "MaxOverlayW",  "value": "3840",                  "note": ""},
+      {"id": "MaxOverlayH",  "value": "2160",                  "note": ""},
+      {"id": "GuestTimeoutMs","value": "3000",                 "note": "host treats the guest as gone after this"}
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+waitscene title 120
+sleep 3
+host
+waitscene lobby 60
+sleep 4
+startrun
+sleep 20
+exitpod
+sleep 3
+exitpod
+waitbody 60
+sleep 3
+mc effect give @s minecraft:resistance infinite 4 true
+mc effect give @s minecraft:regeneration infinite 4 true
+view 0
+log test: skin overlays in F5 (no armour, so the arms and legs show)
+goto_spot chest
+sleep 2
+view 1
+sleep 1
+shot skin_back
+view 2
+sleep 1
+shot skin_front
+look 0 35
+sleep 1
+shot skin_front2
+look 120 -15
+sleep 1
+shot skin_side
+view 0
+sleep 1
+log test: under-map rescue (Minecraft player pushed 3 blocks into the ground)
+mc tp @s ~ ~-3 ~
+sleep 3
+shot rescue_after
+probe
+log done

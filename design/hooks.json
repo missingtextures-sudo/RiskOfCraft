@@ -1,0 +1,438 @@
+{
+ "sheet": "hooks",
+ "about": "Every place the mashup touches either game. One row per hook. game: ror2 (BepInEx/Harmony, checked against RoR2.dll build 25475991) or minecraft (Fabric mod). kind: prefix/postfix (Harmony), event (subscribe), call (we call it), mixin/callback (Fabric). gate: when the hook acts. module: the source file that implements it.",
+ "columns": [
+  "id",
+  "game",
+  "target",
+  "kind",
+  "gate",
+  "does",
+  "module"
+ ],
+ "rows": [
+  {
+   "id": "input_move",
+   "game": "ror2",
+   "target": "RoR2.PlayerCharacterMasterController.Update",
+   "kind": "postfix",
+   "gate": "local body follows Minecraft",
+   "does": "zero moveVector; aimOrigin/aimDirection from Minecraft's eye and look",
+   "module": "ror2/src/Patches/InputPatches.cs"
+  },
+  {
+   "id": "input_buttons",
+   "game": "ror2",
+   "target": "RoR2.PlayerCharacterMasterController.PollButtonInput",
+   "kind": "postfix",
+   "gate": "local body follows Minecraft",
+   "does": "skills, jump, sprint off; interact from G, equipment from R",
+   "module": "ror2/src/Patches/InputPatches.cs"
+  },
+  {
+   "id": "motor_velocity",
+   "game": "ror2",
+   "target": "RoR2.CharacterMotor.UpdateVelocity",
+   "kind": "prefix",
+   "gate": "local body follows Minecraft",
+   "does": "no RoR2 gravity or movement; velocity zero",
+   "module": "ror2/src/Patches/MotorPatches.cs"
+  },
+  {
+   "id": "motor_rotation",
+   "game": "ror2",
+   "target": "RoR2.CharacterDirection.yaw",
+   "kind": "call",
+   "gate": "local body follows Minecraft",
+   "does": "body faces Minecraft's yaw (CharacterMotor.UpdateRotation is already identity in RoR2)",
+   "module": "ror2/src/Player/Follower.cs"
+  },
+  {
+   "id": "camera",
+   "game": "ror2",
+   "target": "RoR2.CameraRigController.LateUpdate",
+   "kind": "postfix",
+   "gate": "rig targets the local Steve, Minecraft owns",
+   "does": "camera at Minecraft's eye with its F5 mode and FOV",
+   "module": "ror2/src/Patches/CameraPatches.cs"
+  },
+  {
+   "id": "damage_in",
+   "game": "ror2",
+   "target": "RoR2.HealthComponent.TakeDamageProcess",
+   "kind": "prefix+postfix",
+   "gate": "server; victim is a linked Steve",
+   "does": "health lost after RoR2 armor/blocks goes to Minecraft as hurt; RoR2 health restored",
+   "module": "ror2/src/Patches/HealthPatches.cs"
+  },
+  {
+   "id": "heal_in",
+   "game": "ror2",
+   "target": "RoR2.HealthComponent.Heal",
+   "kind": "prefix",
+   "gate": "server; target is a linked Steve",
+   "does": "RoR2 healing and regen go to Minecraft health",
+   "module": "ror2/src/Patches/HealthPatches.cs"
+  },
+  {
+   "id": "buddha",
+   "game": "ror2",
+   "target": "RoR2.CharacterBody.bodyFlags (BodyFlags.Buddha)",
+   "kind": "call",
+   "gate": "server; Steve linked",
+   "does": "RoR2 never kills a linked Steve by itself; Minecraft's death does",
+   "module": "ror2/src/Game/SteveRegistry.cs"
+  },
+  {
+   "id": "suicide",
+   "game": "ror2",
+   "target": "RoR2.HealthComponent.Suicide",
+   "kind": "call",
+   "gate": "server, on a Minecraft death",
+   "does": "kills the Steve's RoR2 body",
+   "module": "ror2/src/Game/SteveRegistry.cs"
+  },
+  {
+   "id": "interactions",
+   "game": "ror2",
+   "target": "RoR2.GlobalEventManager.OnInteractionsGlobal",
+   "kind": "event",
+   "gate": "server; interactor is a Steve",
+   "does": "chests, barrels and shrines roll a Minecraft loot table for that player",
+   "module": "ror2/src/Game/Loot.cs"
+  },
+  {
+   "id": "deaths",
+   "game": "ror2",
+   "target": "RoR2.GlobalEventManager.onCharacterDeathServer",
+   "kind": "event",
+   "gate": "server; attacker is a Steve",
+   "does": "monster kills roll its Minecraft mob loot table and give XP",
+   "module": "ror2/src/Game/Loot.cs"
+  },
+  {
+   "id": "run_start",
+   "game": "ror2",
+   "target": "RoR2.Run.onRunStartGlobal",
+   "kind": "event",
+   "gate": "always",
+   "does": "clears the Minecraft inventory and gives the starter kit",
+   "module": "ror2/src/Game/RunStart.cs"
+  },
+  {
+   "id": "stage_start",
+   "game": "ror2",
+   "target": "RoR2.Stage.onStageStartGlobal",
+   "kind": "event",
+   "gate": "always",
+   "does": "new collision epoch; blocks of the last stage are cleared",
+   "module": "ror2/src/Game/RunStart.cs"
+  },
+  {
+   "id": "teleported",
+   "game": "ror2",
+   "target": "RoR2.MapZone.onBodyTeleportGlobal",
+   "kind": "event",
+   "gate": "local Steve",
+   "does": "out-of-bounds rescue: Minecraft teleports to the new spot",
+   "module": "ror2/src/Plugin.cs"
+  },
+  {
+   "id": "survivor_hide",
+   "game": "ror2",
+   "target": "RoR2.SurvivorDef.hidden",
+   "kind": "call",
+   "gate": "after SurvivorCatalog init",
+   "does": "every survivor except Commando is hidden from character select",
+   "module": "ror2/src/Game/Survivors.cs"
+  },
+  {
+   "id": "survivor_force",
+   "game": "ror2",
+   "target": "RoR2.NetworkUser.GetSurvivorPreference",
+   "kind": "postfix",
+   "gate": "always",
+   "does": "every player spawns as the Steve body (Commando's)",
+   "module": "ror2/src/Patches/SurvivorPatches.cs"
+  },
+  {
+   "id": "steve_name",
+   "game": "ror2",
+   "target": "RoR2.Language.GetString(string)",
+   "kind": "postfix",
+   "gate": "COMMANDO_* tokens",
+   "does": "Commando is shown as Steve",
+   "module": "ror2/src/Patches/SurvivorPatches.cs"
+  },
+  {
+   "id": "hud",
+   "game": "ror2",
+   "target": "RoR2.UI.HUD (healthBar, expBar, levelText, skillIcons, sprintIcon, buffDisplay)",
+   "kind": "call",
+   "gate": "Minecraft owns",
+   "does": "RoR2's own bars and skills hidden under Minecraft's HUD",
+   "module": "ror2/src/Game/HudHider.cs"
+  },
+  {
+   "id": "pause",
+   "game": "ror2",
+   "target": "RoR2.PauseManager.isPaused",
+   "kind": "call",
+   "gate": "always",
+   "does": "a host menu counts as HostMenu ownership",
+   "module": "ror2/src/Player/Ownership.cs"
+  },
+  {
+   "id": "net_start_client",
+   "game": "ror2",
+   "target": "RoR2.Networking.NetworkManagerSystem.onStartClientGlobal",
+   "kind": "event",
+   "gate": "always",
+   "does": "registers the client half of the Steve messages",
+   "module": "ror2/src/Net/SteveNet.cs"
+  },
+  {
+   "id": "net_start_server",
+   "game": "ror2",
+   "target": "RoR2.Networking.NetworkManagerSystem.onStartServerGlobal",
+   "kind": "event",
+   "gate": "always",
+   "does": "registers the server half of the Steve messages",
+   "module": "ror2/src/Net/SteveNet.cs"
+  },
+  {
+   "id": "body_renderers",
+   "game": "ror2",
+   "target": "RoR2.CharacterModel (renderers under the body's ModelLocator)",
+   "kind": "call",
+   "gate": "every Steve body",
+   "does": "Commando's model is hidden; a Steve model is drawn instead",
+   "module": "ror2/src/Render/SteveModels.cs"
+  },
+  {
+   "id": "mc_link",
+   "game": "minecraft",
+   "target": "dev.skycraft.link.SkyLink (shared memory)",
+   "kind": "callback",
+   "gate": "always",
+   "does": "opens Local\\RiskOfCraft_v1 and runs the guest",
+   "module": "fabric/src/main/java/dev/skycraft/link/SkyLink.java"
+  },
+  {
+   "id": "mc_commands",
+   "game": "minecraft",
+   "target": "SkyLink command ring -> Commands.performPrefixedCommand",
+   "kind": "callback",
+   "gate": "player in world",
+   "does": "runs the host's Minecraft commands as the player",
+   "module": "fabric/src/main/java/dev/skycraft/link/HostCommands.java"
+  },
+  {
+   "id": "mc_roc_command",
+   "game": "minecraft",
+   "target": "CommandRegistrationCallback (/riskofcraft)",
+   "kind": "callback",
+   "gate": "always",
+   "does": "heal and reset-run commands the vanilla set lacks",
+   "module": "fabric/src/main/java/dev/skycraft/link/HostCommands.java"
+  },
+  {
+   "id": "mc_hurt",
+   "game": "minecraft",
+   "target": "SkyCombat.hurtPlayer (InputType Hurt)",
+   "kind": "callback",
+   "gate": "survival",
+   "does": "RoR2 hits become Minecraft damage (armor, blocking, hurt sound)",
+   "module": "fabric/src/main/java/dev/skycraft/combat/SkyCombat.java"
+  },
+  {
+   "id": "mc_actors",
+   "game": "minecraft",
+   "target": "SkyCombat proxies (SkyrimActorEntity)",
+   "kind": "callback",
+   "gate": "actor table",
+   "does": "RoR2 monsters are hittable proxies; hits go back as EvHitActor",
+   "module": "fabric/src/main/java/dev/skycraft/combat/SkyrimActorEntity.java"
+  },
+  {
+   "id": "mc_placed",
+   "game": "minecraft",
+   "target": "BlockItem.place (mixin)",
+   "kind": "mixin",
+   "gate": "server side",
+   "does": "remembers blocks the player placed so a new stage can clear them",
+   "module": "fabric/src/main/java/dev/skycraft/mixin/BlockItemPlaceMixin.java"
+  },
+  {
+   "id": "surface",
+   "game": "ror2",
+   "target": "RoR2.SurfaceDefProvider.GetObjectSurfaceDef",
+   "kind": "call",
+   "gate": "collision export",
+   "does": "what a dug triangle is made of",
+   "module": "ror2/src/World/CollisionExporter.cs"
+  },
+  {
+   "id": "mc_portal",
+   "game": "minecraft",
+   "target": "Entity.setAsInsidePortal (mixin)",
+   "kind": "mixin",
+   "gate": "player in the mirror world",
+   "does": "stepping into a Nether or End portal tells RoR2 (event PortalEntered) instead of changing dimension",
+   "module": "fabric/src/main/java/dev/skycraft/mixin/EntityPortalMixin.java"
+  },
+  {
+   "id": "mc_portal_dimension",
+   "game": "minecraft",
+   "target": "BaseFireBlock.inPortalDimension (mixin)",
+   "kind": "mixin",
+   "gate": "always",
+   "does": "Nether portals light in the mirror world",
+   "module": "fabric/src/main/java/dev/skycraft/mixin/BaseFireBlockMixin.java"
+  },
+  {
+   "id": "mc_dragon_death",
+   "game": "minecraft",
+   "target": "EnderDragon.tickDeath, EnderDragon.kill (mixin)",
+   "kind": "mixin",
+   "gate": "first death tick, or /kill",
+   "does": "event DragonKilled",
+   "module": "fabric/src/main/java/dev/skycraft/mixin/EnderDragonMixin.java"
+  },
+  {
+   "id": "mc_stage_commands",
+   "game": "minecraft",
+   "target": "/riskofcraft place_chest, end_portal, decor, end_arena, summon_dragon, send_texture",
+   "kind": "callback",
+   "gate": "host commands",
+   "does": "chests, portals, decorations, the dragon arena, block textures for RoR2",
+   "module": "fabric/src/main/java/dev/skycraft/link/StageBuilder.java"
+  },
+  {
+   "id": "mc_loot_tables",
+   "game": "minecraft",
+   "target": "data/riskofcraft/loot_table (mod data pack)",
+   "kind": "callback",
+   "gate": "always",
+   "does": "tiered chest loot with the rare pool",
+   "module": "fabric/src/main/resources/data/riskofcraft/loot_table/chests/tier_1.json"
+  },
+  {
+   "id": "advance_stage",
+   "game": "ror2",
+   "target": "RoR2.Run.AdvanceStage(SceneDef)",
+   "kind": "call",
+   "gate": "server, a portal was entered",
+   "does": "the run goes to the custom stage's base scene",
+   "module": "ror2/src/Game/CustomStages.cs"
+  },
+  {
+   "id": "scene_director",
+   "game": "ror2",
+   "target": "RoR2.SceneDirector.PopulateScene",
+   "kind": "prefix",
+   "gate": "server, custom stage",
+   "does": "more interactables (interactable_credit_multiplier)",
+   "module": "ror2/src/Patches/StagePatches.cs"
+  },
+  {
+   "id": "game_over",
+   "game": "ror2",
+   "target": "RoR2.Run.BeginGameOver(GameEndingDef)",
+   "kind": "call",
+   "gate": "server, the Ender Dragon died",
+   "does": "the run ends in victory (MainEnding) once the credits are over",
+   "module": "ror2/src/Game/CustomStages.cs"
+  },
+  {
+   "id": "ground_nodes",
+   "game": "ror2",
+   "target": "RoR2.SceneInfo.groundNodes (NodeGraph)",
+   "kind": "call",
+   "gate": "stage start",
+   "does": "where Minecraft chests can stand",
+   "module": "ror2/src/Game/ChestSpawner.cs"
+  },
+  {
+   "id": "teleporter_pos",
+   "game": "ror2",
+   "target": "RoR2.TeleporterInteraction.instance",
+   "kind": "call",
+   "gate": "stage 5",
+   "does": "where the End portal frame goes",
+   "module": "ror2/src/Game/ChestSpawner.cs"
+  },
+  {
+   "id": "shop_terminal",
+   "game": "ror2",
+   "target": "RoR2.ShopTerminalBehavior.DropPickup / PurchaseInteraction.OnInteractionBegin",
+   "kind": "prefix",
+   "gate": "server, a Minecraft terminal",
+   "does": "lunar coins buy a Minecraft rare item instead of a RoR2 drop",
+   "module": "ror2/src/Patches/ShopPatches.cs"
+  },
+  {
+   "id": "terrain_materials",
+   "game": "ror2",
+   "target": "Renderers on the World layer (Hopoo Triplanar Terrain Blend / Standard)",
+   "kind": "call",
+   "gate": "client, custom stage",
+   "does": "stage terrain retextured with the player's Minecraft block textures",
+   "module": "ror2/src/Render/Retexture.cs"
+  },
+  {
+   "id": "rescue",
+   "game": "ror2",
+   "target": "RoR2.TeleportHelper.TeleportBody + Physics.Raycast (back faces, World layer)",
+   "kind": "call",
+   "gate": "Minecraft owns; feet under a ground surface for 0.5 s, not in a dug cell",
+   "does": "puts Steve back on top of the ground when knockback shoves him through RoR2's terrain",
+   "module": "ror2/src/Player/UnderMapRescue.cs"
+  },
+  {
+   "id": "mc_credits_done",
+   "game": "minecraft",
+   "target": "WinScreen.respawn (client mixin)",
+   "kind": "mixin",
+   "gate": "the credits screen closes",
+   "does": "event CreditsDone",
+   "module": "fabric/src/client/java/dev/skycraft/client/mixin/WinScreenMixin.java"
+  },
+  {
+   "id": "game_over_state",
+   "game": "ror2",
+   "target": "RoR2.GameOverController.SetRunReport (postfix)",
+   "kind": "postfix",
+   "gate": "server, the dragon win",
+   "does": "skip RoR2's outro cutscene and credits: straight to the run report (Minecraft's credits played instead)",
+   "module": "ror2/src/Patches/StagePatches.cs"
+  },
+  {
+   "id": "lobby_mannequin",
+   "game": "ror2",
+   "target": "RoR2.SurvivorMannequins.SurvivorMannequinSlotController.RebuildMannequinInstance / ApplyLoadoutToMannequinInstance (postfix)",
+   "kind": "postfix",
+   "gate": "a lobby pad builds or re-skins its mannequin",
+   "does": "Commando's display hidden; the player's Minecraft model drawn on the pad",
+   "module": "ror2/src/Patches/SurvivorPatches.cs"
+  },
+  {
+   "id": "mc_spawns_command",
+   "game": "minecraft",
+   "target": "/riskofcraft spawns on|off",
+   "kind": "callback",
+   "gate": "the player types it (testing)",
+   "does": "event SetSpawns",
+   "module": "fabric/src/main/java/dev/skycraft/link/StageBuilder.java"
+  },
+  {
+   "id": "spawns_switch",
+   "game": "ror2",
+   "target": "RoR2.CombatDirector.cvDirectorCombatDisable",
+   "kind": "call",
+   "gate": "server, SetSpawns from a player; reset on a new run",
+   "does": "monster spawns off (and the monsters alive cleared) or on again",
+   "module": "ror2/src/Game/SpawnToggle.cs"
+  }
+ ]
+}

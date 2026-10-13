@@ -1,0 +1,39 @@
+waitscene title 120
+sleep 3
+host
+waitscene lobby 60
+sleep 8
+shot lobby_steve
+startrun
+sleep 20
+exitpod
+sleep 3
+exitpod
+waitbody 60
+sleep 3
+mc effect give @s minecraft:resistance infinite 4 true
+mc effect give @s minecraft:regeneration infinite 4 true
+view 0
+goto_spot chest
+log test: RoR2 health bar and skills hidden
+sleep 2
+shot hud_start
+hudtree
+stats
+log test: equipment slot, R to use, cooldown
+equip CommandMissile
+sleep 1.5
+shot hud_equip
+useequip 1.0
+sleep 1.5
+stats
+shot hud_cooldown
+log test: RoR2 items change Steve's Minecraft stats
+item Hoof 5
+item Syringe 5
+item Clover 2
+item Knurl 3
+sleep 3
+stats
+shot hud_items
+log done

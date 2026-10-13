@@ -1,0 +1,1592 @@
+{
+ "sheet": "gameplay",
+ "about": "The rules the mashup adds between the games. Each table is a group of like things; one row per thing, one column per property. Minecraft names are checked against the 26.3 jar (design/mc_index), RoR2 body names against RoR2's BodyCatalog.",
+ "scaling": {
+  "about": "Risk of Rain stats that become real Minecraft attributes or damage. ratio = ror2_stat / ror2_base. Sent when the value changes by more than min_change. mode ratio: value = mc_base x ror2_stat / ror2_base; mode add: value = mc_base + ror2_stat (stats with no base, like luck).",
+  "columns": [
+   "id",
+   "ror2_stat",
+   "ror2_base",
+   "mc_target",
+   "mc_base",
+   "command",
+   "min_change",
+   "mode"
+  ],
+  "rows": [
+   {
+    "id": "max_health",
+    "ror2_stat": "maxHealth",
+    "ror2_base": "baseMaxHealth",
+    "mc_target": "minecraft:max_health",
+    "mc_base": 20.0,
+    "command": "attribute",
+    "min_change": 0.5,
+    "mode": "ratio"
+   },
+   {
+    "id": "move_speed",
+    "ror2_stat": "moveSpeed",
+    "ror2_base": "baseMoveSpeed",
+    "mc_target": "minecraft:movement_speed",
+    "mc_base": 0.1,
+    "command": "attribute",
+    "min_change": 0.002,
+    "mode": "ratio"
+   },
+   {
+    "id": "attack_speed",
+    "ror2_stat": "attackSpeed",
+    "ror2_base": "baseAttackSpeed",
+    "mc_target": "minecraft:attack_speed",
+    "mc_base": 4.0,
+    "command": "attribute",
+    "min_change": 0.05,
+    "mode": "ratio"
+   },
+   {
+    "id": "jump",
+    "ror2_stat": "jumpPower",
+    "ror2_base": "baseJumpPower",
+    "mc_target": "minecraft:jump_strength",
+    "mc_base": 0.42,
+    "command": "attribute",
+    "min_change": 0.01,
+    "mode": "ratio"
+   },
+   {
+    "id": "luck",
+    "ror2_stat": "luck",
+    "ror2_base": "none",
+    "mc_target": "minecraft:luck",
+    "mc_base": 0.0,
+    "command": "attribute",
+    "min_change": 0.5,
+    "mode": "add"
+   },
+   {
+    "id": "mining_speed",
+    "ror2_stat": "attackSpeed",
+    "ror2_base": "baseAttackSpeed",
+    "mc_target": "minecraft:block_break_speed",
+    "mc_base": 1.0,
+    "command": "attribute",
+    "min_change": 0.05,
+    "mode": "ratio"
+   }
+  ]
+ },
+ "damage": {
+  "about": "How damage crosses. Outgoing: RoR2 damage = Minecraft damage x body.damage x out_per_mc. Incoming: Minecraft damage = RoR2 health lost x 20 / body.baseMaxHealth. Healing uses the same rate. The guest divides a hurt value by hurt_divisor.",
+  "columns": [
+   "id",
+   "value",
+   "note"
+  ],
+  "rows": [
+   {
+    "id": "out_per_mc",
+    "value": 0.4,
+    "note": "a stone sword (5) at level 1 (damage 12) hits for 24: a Lemurian (80 HP) in about 4 hits"
+   },
+   {
+    "id": "proc_coefficient",
+    "value": 1.0,
+    "note": "Minecraft hits proc RoR2 on-hit items fully"
+   },
+   {
+    "id": "hurt_divisor",
+    "value": 5.0,
+    "note": "SkyCombat.SKYRIM_TO_MC_DAMAGE in the guest"
+   },
+   {
+    "id": "max_hit_distance",
+    "value": 12.0,
+    "note": "server rejects a Steve hit on a target further than this many metres from the Steve"
+   },
+   {
+    "id": "heal_batch_seconds",
+    "value": 0.5,
+    "note": "server sums healing per Steve and sends at most this often"
+   }
+  ]
+ },
+ "loot_chests": {
+  "about": "RoR2 interactables (GameObject name, without (Clone)) that also give a Minecraft loot table roll to the Steve who used them.",
+  "columns": [
+   "id",
+   "ror2_object",
+   "mc_loot_table",
+   "note"
+  ],
+  "rows": [
+   {
+    "id": "small_chest",
+    "ror2_object": "Chest1",
+    "mc_loot_table": "chests/simple_dungeon",
+    "note": ""
+   },
+   {
+    "id": "large_chest",
+    "ror2_object": "Chest2",
+    "mc_loot_table": "chests/abandoned_mineshaft",
+    "note": ""
+   },
+   {
+    "id": "legendary_chest",
+    "ror2_object": "GoldChest",
+    "mc_loot_table": "chests/bastion_treasure",
+    "note": ""
+   },
+   {
+    "id": "damage_chest",
+    "ror2_object": "CategoryChestDamage",
+    "mc_loot_table": "chests/village/village_weaponsmith",
+    "note": ""
+   },
+   {
+    "id": "healing_chest",
+    "ror2_object": "CategoryChestHealing",
+    "mc_loot_table": "chests/village/village_butcher",
+    "note": ""
+   },
+   {
+    "id": "utility_chest",
+    "ror2_object": "CategoryChestUtility",
+    "mc_loot_table": "chests/village/village_toolsmith",
+    "note": ""
+   },
+   {
+    "id": "damage_chest2",
+    "ror2_object": "CategoryChest2Damage",
+    "mc_loot_table": "chests/village/village_weaponsmith",
+    "note": "large"
+   },
+   {
+    "id": "healing_chest2",
+    "ror2_object": "CategoryChest2Healing",
+    "mc_loot_table": "chests/village/village_butcher",
+    "note": "large"
+   },
+   {
+    "id": "utility_chest2",
+    "ror2_object": "CategoryChest2Utility",
+    "mc_loot_table": "chests/village/village_toolsmith",
+    "note": "large"
+   },
+   {
+    "id": "equipment_barrel",
+    "ror2_object": "EquipmentBarrel",
+    "mc_loot_table": "chests/village/village_armorer",
+    "note": ""
+   },
+   {
+    "id": "money_barrel",
+    "ror2_object": "Barrel1",
+    "mc_loot_table": "chests/village/village_plains_house",
+    "note": ""
+   },
+   {
+    "id": "lunar_pod",
+    "ror2_object": "LunarChest",
+    "mc_loot_table": "chests/end_city_treasure",
+    "note": ""
+   },
+   {
+    "id": "adaptive_chest",
+    "ror2_object": "CasinoChest",
+    "mc_loot_table": "chests/desert_pyramid",
+    "note": ""
+   },
+   {
+    "id": "chance_shrine",
+    "ror2_object": "ShrineChance",
+    "mc_loot_table": "chests/spawn_bonus_chest",
+    "note": "every coin in"
+   },
+   {
+    "id": "void_cradle",
+    "ror2_object": "VoidChest",
+    "mc_loot_table": "chests/ancient_city",
+    "note": ""
+   },
+   {
+    "id": "rusty_lockbox",
+    "ror2_object": "Lockbox",
+    "mc_loot_table": "chests/buried_treasure",
+    "note": ""
+   },
+   {
+    "id": "scav_bag",
+    "ror2_object": "ScavBackpack",
+    "mc_loot_table": "chests/pillager_outpost",
+    "note": ""
+   }
+  ]
+ },
+ "monsters": {
+  "about": "RoR2 monsters a Steve kills: the Minecraft loot table that drops into the Steve's inventory, and the XP points. The * row is every other body.",
+  "columns": [
+   "id",
+   "ror2_body",
+   "mc_loot_table",
+   "xp"
+  ],
+  "rows": [
+   {
+    "id": "beetle",
+    "ror2_body": "BeetleBody",
+    "mc_loot_table": "entities/spider",
+    "xp": 5
+   },
+   {
+    "id": "beetle_guard",
+    "ror2_body": "BeetleGuardBody",
+    "mc_loot_table": "entities/iron_golem",
+    "xp": 10
+   },
+   {
+    "id": "lemurian",
+    "ror2_body": "LemurianBody",
+    "mc_loot_table": "entities/zombie",
+    "xp": 5
+   },
+   {
+    "id": "elder_lemurian",
+    "ror2_body": "LemurianBruiserBody",
+    "mc_loot_table": "entities/blaze",
+    "xp": 10
+   },
+   {
+    "id": "wisp",
+    "ror2_body": "WispBody",
+    "mc_loot_table": "entities/blaze",
+    "xp": 5
+   },
+   {
+    "id": "greater_wisp",
+    "ror2_body": "GreaterWispBody",
+    "mc_loot_table": "entities/ghast",
+    "xp": 10
+   },
+   {
+    "id": "jellyfish",
+    "ror2_body": "JellyfishBody",
+    "mc_loot_table": "entities/glow_squid",
+    "xp": 5
+   },
+   {
+    "id": "imp",
+    "ror2_body": "ImpBody",
+    "mc_loot_table": "entities/enderman",
+    "xp": 5
+   },
+   {
+    "id": "stone_golem",
+    "ror2_body": "GolemBody",
+    "mc_loot_table": "entities/iron_golem",
+    "xp": 10
+   },
+   {
+    "id": "clay_templar",
+    "ror2_body": "ClayBruiserBody",
+    "mc_loot_table": "entities/husk",
+    "xp": 10
+   },
+   {
+    "id": "hermit_crab",
+    "ror2_body": "HermitCrabBody",
+    "mc_loot_table": "entities/armadillo",
+    "xp": 5
+   },
+   {
+    "id": "alloy_vulture",
+    "ror2_body": "VultureBody",
+    "mc_loot_table": "entities/phantom",
+    "xp": 5
+   },
+   {
+    "id": "brass_contraption",
+    "ror2_body": "BellBody",
+    "mc_loot_table": "entities/copper_golem",
+    "xp": 10
+   },
+   {
+    "id": "bighorn_bison",
+    "ror2_body": "BisonBody",
+    "mc_loot_table": "entities/cow",
+    "xp": 5
+   },
+   {
+    "id": "mini_mushrum",
+    "ror2_body": "MiniMushroomBody",
+    "mc_loot_table": "entities/mooshroom",
+    "xp": 5
+   },
+   {
+    "id": "parent",
+    "ror2_body": "ParentBody",
+    "mc_loot_table": "entities/ravager",
+    "xp": 10
+   },
+   {
+    "id": "lunar_golem",
+    "ror2_body": "LunarGolemBody",
+    "mc_loot_table": "entities/shulker",
+    "xp": 10
+   },
+   {
+    "id": "lunar_wisp",
+    "ror2_body": "LunarWispBody",
+    "mc_loot_table": "entities/endermite",
+    "xp": 10
+   },
+   {
+    "id": "lunar_exploder",
+    "ror2_body": "LunarExploderBody",
+    "mc_loot_table": "entities/creeper",
+    "xp": 5
+   },
+   {
+    "id": "void_reaver",
+    "ror2_body": "NullifierBody",
+    "mc_loot_table": "entities/warden",
+    "xp": 10
+   },
+   {
+    "id": "solus_probe",
+    "ror2_body": "RoboBallMiniBody",
+    "mc_loot_table": "entities/iron_golem",
+    "xp": 5
+   },
+   {
+    "id": "overloading_worm",
+    "ror2_body": "ElectricWormBody",
+    "mc_loot_table": "chests/nether_bridge",
+    "xp": 50
+   },
+   {
+    "id": "magma_worm",
+    "ror2_body": "MagmaWormBody",
+    "mc_loot_table": "entities/magma_cube",
+    "xp": 50
+   },
+   {
+    "id": "stone_titan",
+    "ror2_body": "TitanBody",
+    "mc_loot_table": "chests/ruined_portal",
+    "xp": 50
+   },
+   {
+    "id": "wandering_vagrant",
+    "ror2_body": "VagrantBody",
+    "mc_loot_table": "entities/elder_guardian",
+    "xp": 50
+   },
+   {
+    "id": "clay_dunestrider",
+    "ror2_body": "ClayBossBody",
+    "mc_loot_table": "chests/desert_pyramid",
+    "xp": 50
+   },
+   {
+    "id": "imp_overlord",
+    "ror2_body": "ImpBossBody",
+    "mc_loot_table": "chests/end_city_treasure",
+    "xp": 50
+   },
+   {
+    "id": "grovetender",
+    "ror2_body": "GravekeeperBody",
+    "mc_loot_table": "chests/ancient_city",
+    "xp": 50
+   },
+   {
+    "id": "solus_control",
+    "ror2_body": "RoboBallBossBody",
+    "mc_loot_table": "chests/trial_chambers/reward",
+    "xp": 50
+   },
+   {
+    "id": "beetle_queen",
+    "ror2_body": "BeetleQueen2Body",
+    "mc_loot_table": "chests/jungle_temple",
+    "xp": 50
+   },
+   {
+    "id": "grandparent",
+    "ror2_body": "GrandParentBody",
+    "mc_loot_table": "chests/bastion_treasure",
+    "xp": 50
+   },
+   {
+    "id": "scavenger",
+    "ror2_body": "ScavBody",
+    "mc_loot_table": "chests/woodland_mansion",
+    "xp": 50
+   },
+   {
+    "id": "mithrix",
+    "ror2_body": "BrotherBody",
+    "mc_loot_table": "chests/end_city_treasure",
+    "xp": 100
+   },
+   {
+    "id": "aurelionite",
+    "ror2_body": "TitanGoldBody",
+    "mc_loot_table": "chests/bastion_treasure",
+    "xp": 50
+   },
+   {
+    "id": "xi_construct",
+    "ror2_body": "MegaConstructBody",
+    "mc_loot_table": "chests/trial_chambers/reward_rare",
+    "xp": 50
+   },
+   {
+    "id": "void_devastator",
+    "ror2_body": "VoidMegaCrabBody",
+    "mc_loot_table": "entities/warden",
+    "xp": 50
+   },
+   {
+    "id": "larva",
+    "ror2_body": "AcidLarvaBody",
+    "mc_loot_table": "entities/slime",
+    "xp": 5
+   },
+   {
+    "id": "clay_apothecary",
+    "ror2_body": "ClayGrenadierBody",
+    "mc_loot_table": "entities/husk",
+    "xp": 5
+   },
+   {
+    "id": "blind_pest",
+    "ror2_body": "FlyingVerminBody",
+    "mc_loot_table": "entities/bat",
+    "xp": 5
+   },
+   {
+    "id": "blind_vermin",
+    "ror2_body": "VerminBody",
+    "mc_loot_table": "entities/rabbit",
+    "xp": 5
+   },
+   {
+    "id": "gup",
+    "ror2_body": "GupBody",
+    "mc_loot_table": "entities/slime",
+    "xp": 5
+   },
+   {
+    "id": "alpha_construct",
+    "ror2_body": "MinorConstructBody",
+    "mc_loot_table": "entities/copper_golem",
+    "xp": 5
+   },
+   {
+    "id": "void_barnacle",
+    "ror2_body": "VoidBarnacleBody",
+    "mc_loot_table": "entities/glow_squid",
+    "xp": 5
+   },
+   {
+    "id": "void_jailer",
+    "ror2_body": "VoidJailerBody",
+    "mc_loot_table": "entities/warden",
+    "xp": 10
+   },
+   {
+    "id": "child",
+    "ror2_body": "ChildBody",
+    "mc_loot_table": "entities/fox",
+    "xp": 5
+   },
+   {
+    "id": "halcyonite",
+    "ror2_body": "HalcyoniteBody",
+    "mc_loot_table": "entities/piglin_brute",
+    "xp": 10
+   },
+   {
+    "id": "scorch_wurm",
+    "ror2_body": "ScorchlingBody",
+    "mc_loot_table": "entities/magma_cube",
+    "xp": 10
+   },
+   {
+    "id": "any_other",
+    "ror2_body": "*",
+    "mc_loot_table": "entities/zombie",
+    "xp": 3
+   }
+  ]
+ },
+ "starter_kit": {
+  "about": "What Steve carries when a run starts (after the run reset).",
+  "columns": [
+   "id",
+   "mc_item",
+   "count"
+  ],
+  "rows": [
+   {
+    "id": "sword",
+    "mc_item": "stone_sword",
+    "count": 1
+   },
+   {
+    "id": "bow",
+    "mc_item": "bow",
+    "count": 1
+   },
+   {
+    "id": "pickaxe",
+    "mc_item": "stone_pickaxe",
+    "count": 1
+   },
+   {
+    "id": "shovel",
+    "mc_item": "stone_shovel",
+    "count": 1
+   },
+   {
+    "id": "arrows",
+    "mc_item": "arrow",
+    "count": 32
+   },
+   {
+    "id": "food",
+    "mc_item": "bread",
+    "count": 8
+   }
+  ]
+ },
+ "commands": {
+  "about": "Minecraft commands the host sends through the command ring. {x} are filled in by the host. All run as the player with operator rights.",
+  "columns": [
+   "id",
+   "template",
+   "sent_when"
+  ],
+  "rows": [
+   {
+    "id": "reset_run",
+    "template": "riskofcraft reset_run",
+    "sent_when": "a run starts"
+   },
+   {
+    "id": "give",
+    "template": "give @s minecraft:{item} {count}",
+    "sent_when": "starter kit"
+   },
+   {
+    "id": "loot",
+    "template": "loot give @s loot minecraft:{table}",
+    "sent_when": "chest opened or monster killed by this Steve"
+   },
+   {
+    "id": "xp",
+    "template": "xp add @s {points} points",
+    "sent_when": "monster killed by this Steve"
+   },
+   {
+    "id": "heal",
+    "template": "riskofcraft heal {amount}",
+    "sent_when": "RoR2 healing or regen on this Steve"
+   },
+   {
+    "id": "attribute",
+    "template": "attribute @s {attribute} base set {value}",
+    "sent_when": "a scaling stat changed"
+   },
+   {
+    "id": "time",
+    "template": "time set {ticks}",
+    "sent_when": "a stage starts (day for bright stages)"
+   },
+   {
+    "id": "clear_stage",
+    "template": "riskofcraft clear_placed",
+    "sent_when": "a stage starts: blocks placed on the last stage go"
+   },
+   {
+    "id": "kill_items",
+    "template": "kill @e[type=minecraft:item]",
+    "sent_when": "a stage starts"
+   },
+   {
+    "id": "kill_arrows",
+    "template": "kill @e[type=minecraft:arrow]",
+    "sent_when": "a stage starts"
+   },
+   {
+    "id": "kill_villagers",
+    "template": "kill @e[type=minecraft:villager]",
+    "sent_when": "a stage starts"
+   },
+   {
+    "id": "kill_displays",
+    "template": "kill @e[type=minecraft:item_display]",
+    "sent_when": "a stage starts"
+   },
+   {
+    "id": "kill_crystals",
+    "template": "kill @e[type=minecraft:end_crystal]",
+    "sent_when": "a stage starts"
+   },
+   {
+    "id": "kill_dragons",
+    "template": "riskofcraft clear_dragons",
+    "sent_when": "a stage starts"
+   },
+   {
+    "id": "place_chest",
+    "template": "riskofcraft place_chest {x} {y} {z} {table} {facing}",
+    "sent_when": "a stage starts: random Minecraft chests"
+   },
+   {
+    "id": "end_portal",
+    "template": "riskofcraft end_portal {x} {y} {z} {eye_chance}",
+    "sent_when": "stage 5 starts: the stronghold portal near the teleporter"
+   },
+   {
+    "id": "decor",
+    "template": "riskofcraft decor {kind} {x} {y} {z} {seed}",
+    "sent_when": "a custom stage starts: Minecraft decorations"
+   },
+   {
+    "id": "end_arena",
+    "template": "riskofcraft end_arena {x} {y} {z} {pillars} {radius} {caged}",
+    "sent_when": "The End starts"
+   },
+   {
+    "id": "summon_dragon",
+    "template": "riskofcraft summon_dragon {x} {y} {z} {health}",
+    "sent_when": "The End starts"
+   },
+   {
+    "id": "send_texture",
+    "template": "riskofcraft send_texture {id} {texture}",
+    "sent_when": "a custom stage starts: block textures for the retexture"
+   },
+   {
+    "id": "villager",
+    "template": "riskofcraft villager {x} {y} {z} {profession} {level} {biome_type} {yaw}",
+    "sent_when": "in the Bazaar"
+   },
+   {
+    "id": "item_display",
+    "template": "riskofcraft item_display {x} {y} {z} {item}",
+    "sent_when": "in the Bazaar: the item over each Minecraft terminal"
+   },
+   {
+    "id": "give_rare",
+    "template": "give @s minecraft:{item} {count}",
+    "sent_when": "a Minecraft terminal bought"
+   },
+   {
+    "id": "credits",
+    "template": "riskofcraft credits",
+    "sent_when": "the Ender Dragon died (every player)"
+   },
+   {
+    "id": "stage_mob",
+    "template": "riskofcraft stage_mob {entity} {x} {y} {z} {cap} {health} {damage}",
+    "sent_when": "The Nether: every few seconds while under the cap"
+   },
+   {
+    "id": "clear_mobs",
+    "template": "riskofcraft clear_mobs",
+    "sent_when": "a stage starts"
+   }
+  ]
+ },
+ "keybinds": {
+  "about": "Keys the host keeps while Minecraft has the keyboard. Every other key and the mouse go to Minecraft.",
+  "columns": [
+   "id",
+   "key",
+   "goes_to",
+   "does"
+  ],
+  "rows": [
+   {
+    "id": "interact",
+    "key": "G",
+    "goes_to": "ror2",
+    "does": "RoR2 interact: chests, shrines, teleporter, printers"
+   },
+   {
+    "id": "equipment",
+    "key": "R",
+    "goes_to": "ror2",
+    "does": "use the RoR2 equipment"
+   },
+   {
+    "id": "pause",
+    "key": "Escape",
+    "goes_to": "ror2",
+    "does": "RoR2 pause menu, or closes an open Minecraft screen"
+   },
+   {
+    "id": "mc_menu",
+    "key": "O",
+    "goes_to": "minecraft",
+    "does": "Minecraft's pause and options menu"
+   },
+   {
+    "id": "scoreboard",
+    "key": "Tab",
+    "goes_to": "both",
+    "does": "RoR2 scoreboard and Minecraft player list"
+   }
+  ]
+ },
+ "messages": {
+  "about": "Risk of Rain 2 network messages between each player's game and the host's (UNet, so co-op works).",
+  "columns": [
+   "id",
+   "msg_type",
+   "direction",
+   "fields",
+   "handler"
+  ],
+  "rows": [
+   {
+    "id": "steve_linked",
+    "msg_type": 31001,
+    "direction": "client->server",
+    "fields": "bool linked",
+    "handler": "SteveRegistry.SetLinked"
+   },
+   {
+    "id": "steve_hit",
+    "msg_type": 31002,
+    "direction": "client->server",
+    "fields": "uint target, float mcDamage, uint flags, uint weapon, Vector3 hitPos",
+    "handler": "Combat.ServerHit"
+   },
+   {
+    "id": "steve_died",
+    "msg_type": 31003,
+    "direction": "client->server",
+    "fields": "(none)",
+    "handler": "SteveRegistry.ServerKill"
+   },
+   {
+    "id": "mc_command",
+    "msg_type": 31004,
+    "direction": "server->client",
+    "fields": "string command",
+    "handler": "Commands.Push"
+   },
+   {
+    "id": "steve_hurt",
+    "msg_type": 31005,
+    "direction": "server->client",
+    "fields": "float mcDamage, ushort kind, uint attacker",
+    "handler": "Combat.ClientHurt"
+   },
+   {
+    "id": "steve_portal",
+    "msg_type": 31006,
+    "direction": "client->server",
+    "fields": "uint kind (1 nether, 2 end)",
+    "handler": "CustomStages.ServerPortal"
+   },
+   {
+    "id": "dragon_killed",
+    "msg_type": 31007,
+    "direction": "client->server",
+    "fields": "(none)",
+    "handler": "CustomStages.ServerDragonKilled"
+   },
+   {
+    "id": "stage_mode",
+    "msg_type": 31008,
+    "direction": "server->client",
+    "fields": "string \"<Stage netId>:<mode>\"",
+    "handler": "CustomStages.ClientMode"
+   },
+   {
+    "id": "shop_offer",
+    "msg_type": 31009,
+    "direction": "server->client",
+    "fields": "uint terminal, string rareId",
+    "handler": "LunarShop.ClientOffer"
+   },
+   {
+    "id": "credits_done",
+    "msg_type": 31010,
+    "direction": "client->server",
+    "fields": "(none)",
+    "handler": "CustomStages.ServerCreditsDone"
+   },
+   {
+    "id": "set_spawns",
+    "msg_type": 31011,
+    "direction": "client->server",
+    "fields": "uint on",
+    "handler": "SpawnToggle.ServerSet"
+   }
+  ]
+ },
+ "surfaces": {
+  "about": "RoR2 SurfaceDef (on every collider, read with SurfaceDefProvider) -> the Minecraft block digging into it gives (protocol_enums DigMaterial), whether Minecraft may dig it at all (buildings and creatures stay), and whether it is open land (dirt under grass, ores deeper) rather than rock. The * row is any other surface.",
+  "columns": [
+   "id",
+   "ror2_surface",
+   "dig_material",
+   "diggable",
+   "terrain"
+  ],
+  "rows": [
+   {
+    "id": "stone",
+    "ror2_surface": "sdStone",
+    "dig_material": "Stone",
+    "diggable": true,
+    "terrain": false
+   },
+   {
+    "id": "dirt",
+    "ror2_surface": "sdDirt",
+    "dig_material": "Dirt",
+    "diggable": true,
+    "terrain": true
+   },
+   {
+    "id": "grass",
+    "ror2_surface": "sdGrass",
+    "dig_material": "Grass",
+    "diggable": true,
+    "terrain": true
+   },
+   {
+    "id": "sand",
+    "ror2_surface": "sdSand",
+    "dig_material": "Sand",
+    "diggable": true,
+    "terrain": true
+   },
+   {
+    "id": "snow",
+    "ror2_surface": "sdSnow",
+    "dig_material": "Snow",
+    "diggable": true,
+    "terrain": true
+   },
+   {
+    "id": "ice",
+    "ror2_surface": "sdIce",
+    "dig_material": "Ice",
+    "diggable": true,
+    "terrain": false
+   },
+   {
+    "id": "mud",
+    "ror2_surface": "sdMud",
+    "dig_material": "Mud",
+    "diggable": true,
+    "terrain": true
+   },
+   {
+    "id": "wood",
+    "ror2_surface": "sdWood",
+    "dig_material": "OakLog",
+    "diggable": false,
+    "terrain": false
+   },
+   {
+    "id": "metal",
+    "ror2_surface": "sdMetal",
+    "dig_material": "Metal",
+    "diggable": false,
+    "terrain": false
+   },
+   {
+    "id": "glass",
+    "ror2_surface": "sdGlass",
+    "dig_material": "Glass",
+    "diggable": false,
+    "terrain": false
+   },
+   {
+    "id": "flesh",
+    "ror2_surface": "sdFlesh",
+    "dig_material": "Organic",
+    "diggable": false,
+    "terrain": false
+   },
+   {
+    "id": "bone",
+    "ror2_surface": "sdBone",
+    "dig_material": "Bone",
+    "diggable": false,
+    "terrain": false
+   },
+   {
+    "id": "any_other",
+    "ror2_surface": "*",
+    "dig_material": "Stone",
+    "diggable": false,
+    "terrain": false
+   }
+  ]
+ },
+ "portals": {
+  "about": "Minecraft portals the player lights or opens in the mirror world. Stepping in (for hold_seconds) sends the whole run to the custom stage. The guest cancels Minecraft's own dimension change.",
+  "columns": [
+   "id",
+   "mc_block",
+   "hold_seconds",
+   "custom_stage",
+   "note"
+  ],
+  "rows": [
+   {
+    "id": "nether_portal",
+    "mc_block": "minecraft:nether_portal",
+    "hold_seconds": 2.0,
+    "custom_stage": "nether",
+    "note": "obsidian frame lit with flint and steel; any stage"
+   },
+   {
+    "id": "end_portal",
+    "mc_block": "minecraft:end_portal",
+    "hold_seconds": 0.0,
+    "custom_stage": "end",
+    "note": "the frame spawns on stage 5 (end_portal_frame table)"
+   }
+  ]
+ },
+ "custom_stages": {
+  "about": "Stages RiskOfCraft makes from a RoR2 stage's layout (its collision, navigation, director and teleporter) dressed as a Minecraft dimension: terrain retextured with the player's own Minecraft block textures, fog, Minecraft decorations and extra loot. self_light: how strongly the Minecraft texture lights itself (0 none, 1 full), as Minecraft draws blocks readable in a dark dimension. light_rgb: colour of the stage's added sky light (a directional light at self_light x 2 intensity), so the Minecraft blocks read like a lit dimension. fog_strength: multiplies the base stage's fog density (RoR2 RampFog intensity), 1 keeps it.",
+  "columns": [
+   "id",
+   "base_scene",
+   "title",
+   "subtitle",
+   "top_texture",
+   "side_texture",
+   "accent_texture",
+   "fog_rgb",
+   "interactable_credit_multiplier",
+   "mc_chests",
+   "chest_tier_bonus",
+   "decor",
+   "ends_run",
+   "self_light",
+   "light_rgb",
+   "fog_strength"
+  ],
+  "rows": [
+   {
+    "id": "nether",
+    "base_scene": "dampcavesimple",
+    "title": "The Nether",
+    "subtitle": "Through the portal",
+    "top_texture": "minecraft:block/netherrack",
+    "side_texture": "minecraft:block/basalt_side",
+    "accent_texture": "minecraft:block/crimson_nylium",
+    "fog_rgb": "0.42,0.2,0.14",
+    "interactable_credit_multiplier": 1.6,
+    "mc_chests": 10,
+    "chest_tier_bonus": 1,
+    "decor": "nether",
+    "ends_run": false,
+    "self_light": 0.35,
+    "light_rgb": "1.0,0.9,0.82",
+    "fog_strength": 0.35
+   },
+   {
+    "id": "end",
+    "base_scene": "mysteryspace",
+    "title": "The End",
+    "subtitle": "Free the End",
+    "top_texture": "minecraft:block/end_stone",
+    "side_texture": "minecraft:block/end_stone",
+    "accent_texture": "minecraft:block/obsidian",
+    "fog_rgb": "0.2,0.16,0.26",
+    "interactable_credit_multiplier": 1.0,
+    "mc_chests": 0,
+    "chest_tier_bonus": 0,
+    "decor": "end",
+    "ends_run": true,
+    "self_light": 0.45,
+    "light_rgb": "0.92,0.88,1.0",
+    "fog_strength": 1.0
+   }
+  ]
+ },
+ "chest_tiers": {
+  "about": "Minecraft chests that spawn on every stage (each player's own Minecraft). Tier = stage number + difficulty bonus, capped at tier 5; a tier's loot table (data/riskofcraft/loot_table/chests/<id>.json in the guest) rolls rolls_min-rolls_max whole vanilla chest tables from loot_pools, plus one roll of the rare pool at rare_weight in 100. eye_weight: percent chance a chest also holds 1-2 Eyes of Ender (the stage-5 End portal frame needs them, and there are no blazes to craft them).",
+  "columns": [
+   "id",
+   "tier",
+   "chests",
+   "rolls_min",
+   "rolls_max",
+   "rare_weight",
+   "eye_weight"
+  ],
+  "rows": [
+   {
+    "id": "tier_1",
+    "tier": 1,
+    "chests": 3,
+    "rolls_min": 1,
+    "rolls_max": 1,
+    "rare_weight": 1,
+    "eye_weight": 0
+   },
+   {
+    "id": "tier_2",
+    "tier": 2,
+    "chests": 4,
+    "rolls_min": 1,
+    "rolls_max": 2,
+    "rare_weight": 2,
+    "eye_weight": 8
+   },
+   {
+    "id": "tier_3",
+    "tier": 3,
+    "chests": 5,
+    "rolls_min": 2,
+    "rolls_max": 2,
+    "rare_weight": 4,
+    "eye_weight": 15
+   },
+   {
+    "id": "tier_4",
+    "tier": 4,
+    "chests": 6,
+    "rolls_min": 2,
+    "rolls_max": 3,
+    "rare_weight": 7,
+    "eye_weight": 25
+   },
+   {
+    "id": "tier_5",
+    "tier": 5,
+    "chests": 7,
+    "rolls_min": 3,
+    "rolls_max": 4,
+    "rare_weight": 12,
+    "eye_weight": 30
+   },
+   {
+    "id": "tier_nether",
+    "tier": 6,
+    "chests": 0,
+    "rolls_min": 2,
+    "rolls_max": 3,
+    "rare_weight": 10,
+    "eye_weight": 35
+   }
+  ]
+ },
+ "loot_pools": {
+  "about": "What each chest tier rolls: vanilla Minecraft loot tables (each a weighted entry) plus the rare pool (rare_items, at the tier's rare_weight).",
+  "columns": [
+   "id",
+   "tier",
+   "mc_loot_table",
+   "weight"
+  ],
+  "rows": [
+   {
+    "id": "t1_village",
+    "tier": 1,
+    "mc_loot_table": "chests/village/village_plains_house",
+    "weight": 6
+   },
+   {
+    "id": "t1_dungeon",
+    "tier": 1,
+    "mc_loot_table": "chests/simple_dungeon",
+    "weight": 5
+   },
+   {
+    "id": "t1_camp",
+    "tier": 1,
+    "mc_loot_table": "chests/abandoned_camp_common_chest",
+    "weight": 3
+   },
+   {
+    "id": "t2_mineshaft",
+    "tier": 2,
+    "mc_loot_table": "chests/abandoned_mineshaft",
+    "weight": 6
+   },
+   {
+    "id": "t2_smith",
+    "tier": 2,
+    "mc_loot_table": "chests/village/village_weaponsmith",
+    "weight": 5
+   },
+   {
+    "id": "t2_portal",
+    "tier": 2,
+    "mc_loot_table": "chests/ruined_portal",
+    "weight": 4
+   },
+   {
+    "id": "t3_pyramid",
+    "tier": 3,
+    "mc_loot_table": "chests/desert_pyramid",
+    "weight": 5
+   },
+   {
+    "id": "t3_jungle",
+    "tier": 3,
+    "mc_loot_table": "chests/jungle_temple",
+    "weight": 4
+   },
+   {
+    "id": "t3_portal",
+    "tier": 3,
+    "mc_loot_table": "chests/ruined_portal",
+    "weight": 4
+   },
+   {
+    "id": "t3_outpost",
+    "tier": 3,
+    "mc_loot_table": "chests/pillager_outpost",
+    "weight": 3
+   },
+   {
+    "id": "t4_stronghold",
+    "tier": 4,
+    "mc_loot_table": "chests/stronghold_corridor",
+    "weight": 5
+   },
+   {
+    "id": "t4_buried",
+    "tier": 4,
+    "mc_loot_table": "chests/buried_treasure",
+    "weight": 4
+   },
+   {
+    "id": "t4_mansion",
+    "tier": 4,
+    "mc_loot_table": "chests/woodland_mansion",
+    "weight": 4
+   },
+   {
+    "id": "t4_trial",
+    "tier": 4,
+    "mc_loot_table": "chests/trial_chambers/reward",
+    "weight": 3
+   },
+   {
+    "id": "t5_ancient",
+    "tier": 5,
+    "mc_loot_table": "chests/ancient_city",
+    "weight": 5
+   },
+   {
+    "id": "t5_bastion",
+    "tier": 5,
+    "mc_loot_table": "chests/bastion_treasure",
+    "weight": 3
+   },
+   {
+    "id": "t5_endcity",
+    "tier": 5,
+    "mc_loot_table": "chests/end_city_treasure",
+    "weight": 3
+   },
+   {
+    "id": "t5_trial_rare",
+    "tier": 5,
+    "mc_loot_table": "chests/trial_chambers/reward_rare",
+    "weight": 3
+   },
+   {
+    "id": "tn_bastion",
+    "tier": 6,
+    "mc_loot_table": "chests/bastion_treasure",
+    "weight": 4
+   },
+   {
+    "id": "tn_bridge",
+    "tier": 6,
+    "mc_loot_table": "chests/bastion_bridge",
+    "weight": 4
+   },
+   {
+    "id": "tn_fortress",
+    "tier": 6,
+    "mc_loot_table": "chests/nether_bridge",
+    "weight": 6
+   },
+   {
+    "id": "tn_portal",
+    "tier": 6,
+    "mc_loot_table": "chests/ruined_portal",
+    "weight": 3
+   }
+  ]
+ },
+ "rare_items": {
+  "about": "Minecraft's rarest items. Each can be bought for lunar coins at a Minecraft terminal in the Bazaar Between Time, and turns up at its rare_weight in chest tiers (more often the higher the tier) and in RoR2 legendary chests.",
+  "columns": [
+   "id",
+   "mc_item",
+   "count",
+   "lunar_cost",
+   "rare_weight",
+   "display_name"
+  ],
+  "rows": [
+   {
+    "id": "elytra",
+    "mc_item": "elytra",
+    "count": 1,
+    "lunar_cost": 4,
+    "rare_weight": 2,
+    "display_name": "Elytra"
+   },
+   {
+    "id": "shulker_box",
+    "mc_item": "shulker_box",
+    "count": 1,
+    "lunar_cost": 2,
+    "rare_weight": 4,
+    "display_name": "Shulker Box"
+   },
+   {
+    "id": "totem",
+    "mc_item": "totem_of_undying",
+    "count": 1,
+    "lunar_cost": 3,
+    "rare_weight": 3,
+    "display_name": "Totem of Undying"
+   },
+   {
+    "id": "notch_apple",
+    "mc_item": "enchanted_golden_apple",
+    "count": 1,
+    "lunar_cost": 2,
+    "rare_weight": 4,
+    "display_name": "Enchanted Golden Apple"
+   },
+   {
+    "id": "netherite",
+    "mc_item": "netherite_ingot",
+    "count": 1,
+    "lunar_cost": 2,
+    "rare_weight": 4,
+    "display_name": "Netherite Ingot"
+   },
+   {
+    "id": "upgrade",
+    "mc_item": "netherite_upgrade_smithing_template",
+    "count": 1,
+    "lunar_cost": 1,
+    "rare_weight": 4,
+    "display_name": "Netherite Upgrade"
+   },
+   {
+    "id": "trident",
+    "mc_item": "trident",
+    "count": 1,
+    "lunar_cost": 3,
+    "rare_weight": 3,
+    "display_name": "Trident"
+   },
+   {
+    "id": "mace",
+    "mc_item": "mace",
+    "count": 1,
+    "lunar_cost": 4,
+    "rare_weight": 2,
+    "display_name": "Mace"
+   },
+   {
+    "id": "nether_star",
+    "mc_item": "nether_star",
+    "count": 1,
+    "lunar_cost": 5,
+    "rare_weight": 1,
+    "display_name": "Nether Star"
+   },
+   {
+    "id": "heart_of_the_sea",
+    "mc_item": "heart_of_the_sea",
+    "count": 1,
+    "lunar_cost": 2,
+    "rare_weight": 3,
+    "display_name": "Heart of the Sea"
+   },
+   {
+    "id": "ender_chest",
+    "mc_item": "ender_chest",
+    "count": 1,
+    "lunar_cost": 2,
+    "rare_weight": 3,
+    "display_name": "Ender Chest"
+   },
+   {
+    "id": "diamonds",
+    "mc_item": "diamond",
+    "count": 8,
+    "lunar_cost": 1,
+    "rare_weight": 6,
+    "display_name": "8 Diamonds"
+   },
+   {
+    "id": "ender_eyes",
+    "mc_item": "ender_eye",
+    "count": 4,
+    "lunar_cost": 1,
+    "rare_weight": 6,
+    "display_name": "4 Eyes of Ender"
+   }
+  ]
+ },
+ "lunar_shop": {
+  "about": "The Bazaar Between Time: Minecraft terminals (rare items for lunar coins) and villagers to trade with (each player's own Minecraft, Minecraft's real trading screen).",
+  "columns": [
+   "id",
+   "value",
+   "note"
+  ],
+  "rows": [
+   {
+    "id": "terminals",
+    "value": 5,
+    "note": "rare items offered per visit, picked at random"
+   },
+   {
+    "id": "terminal_spacing",
+    "value": 2.4,
+    "note": "metres between Minecraft terminals"
+   },
+   {
+    "id": "villager_spacing",
+    "value": 2.2,
+    "note": "metres between villagers"
+   }
+  ]
+ },
+ "villagers": {
+  "about": "Villagers that stand in the Bazaar Between Time, master level so their best trades are open.",
+  "columns": [
+   "id",
+   "profession",
+   "level",
+   "biome_type"
+  ],
+  "rows": [
+   {
+    "id": "armorer",
+    "profession": "armorer",
+    "level": 5,
+    "biome_type": "plains"
+   },
+   {
+    "id": "weaponsmith",
+    "profession": "weaponsmith",
+    "level": 5,
+    "biome_type": "plains"
+   },
+   {
+    "id": "toolsmith",
+    "profession": "toolsmith",
+    "level": 5,
+    "biome_type": "plains"
+   },
+   {
+    "id": "librarian",
+    "profession": "librarian",
+    "level": 5,
+    "biome_type": "plains"
+   },
+   {
+    "id": "cleric",
+    "profession": "cleric",
+    "level": 5,
+    "biome_type": "plains"
+   },
+   {
+    "id": "fletcher",
+    "profession": "fletcher",
+    "level": 5,
+    "biome_type": "plains"
+   }
+  ]
+ },
+ "end_portal_frame": {
+  "about": "The stronghold portal that spawns near the teleporter on stage 5.",
+  "columns": [
+   "id",
+   "value",
+   "note"
+  ],
+  "rows": [
+   {
+    "id": "stage",
+    "value": 5,
+    "note": "1-based stage number"
+   },
+   {
+    "id": "distance",
+    "value": 14.0,
+    "note": "metres from the teleporter"
+   },
+   {
+    "id": "eye_chance",
+    "value": 0.5,
+    "note": "chance each of the 12 frames starts with an eye (Minecraft uses 0.1; a run has few stages to find the rest)"
+   }
+  ]
+ },
+ "dragon": {
+  "about": "The Ender Dragon fight in The End: Minecraft's own dragon and AI, health scaled by RoR2's difficulty.",
+  "columns": [
+   "id",
+   "value",
+   "note"
+  ],
+  "rows": [
+   {
+    "id": "base_health",
+    "value": 200.0,
+    "note": "Minecraft's own"
+   },
+   {
+    "id": "health_per_difficulty",
+    "value": 0.35,
+    "note": "x (1 + this x (difficulty coefficient - 1))"
+   },
+   {
+    "id": "health_per_extra_player",
+    "value": 0.5,
+    "note": "x (1 + this x (players - 1))"
+   },
+   {
+    "id": "pillars",
+    "value": 10,
+    "note": "obsidian pillars with end crystals around the island"
+   },
+   {
+    "id": "pillar_radius",
+    "value": 28.0,
+    "note": "metres from the island centre"
+   },
+   {
+    "id": "caged_pillars",
+    "value": 2,
+    "note": "pillars whose crystal sits in iron bars"
+   },
+   {
+    "id": "credits_grace",
+    "value": 20.0,
+    "note": "seconds the run waits for the other players once one player has finished or skipped the credits"
+   },
+   {
+    "id": "credits_max",
+    "value": 720.0,
+    "note": "seconds the run waits at most for the credits before it ends"
+   }
+  ]
+ },
+ "nether_mobs": {
+  "about": "Minecraft's Nether mobs that spawn around the player on The Nether stage, in their own Minecraft (they fight Steve with Minecraft's rules and drop Minecraft loot). weight: how often each is picked; in_air: spawned a few blocks up (ghasts).",
+  "columns": [
+   "id",
+   "mc_entity",
+   "weight",
+   "in_air"
+  ],
+  "rows": [
+   {
+    "id": "zombified_piglin",
+    "mc_entity": "zombified_piglin",
+    "weight": 30,
+    "in_air": false
+   },
+   {
+    "id": "magma_cube",
+    "mc_entity": "magma_cube",
+    "weight": 18,
+    "in_air": false
+   },
+   {
+    "id": "piglin",
+    "mc_entity": "piglin",
+    "weight": 16,
+    "in_air": false
+   },
+   {
+    "id": "blaze",
+    "mc_entity": "blaze",
+    "weight": 12,
+    "in_air": true
+   },
+   {
+    "id": "wither_skeleton",
+    "mc_entity": "wither_skeleton",
+    "weight": 10,
+    "in_air": false
+   },
+   {
+    "id": "hoglin",
+    "mc_entity": "hoglin",
+    "weight": 8,
+    "in_air": false
+   },
+   {
+    "id": "ghast",
+    "mc_entity": "ghast",
+    "weight": 4,
+    "in_air": true
+   }
+  ]
+ },
+ "nether_spawning": {
+  "about": "How The Nether's Minecraft mobs spawn (see nether_mobs).",
+  "columns": [
+   "id",
+   "value",
+   "note"
+  ],
+  "rows": [
+   {
+    "id": "interval",
+    "value": 6.0,
+    "note": "seconds between spawn attempts"
+   },
+   {
+    "id": "cap",
+    "value": 10.0,
+    "note": "Nether mobs alive within 80 blocks of the player at most"
+   },
+   {
+    "id": "min_distance",
+    "value": 14.0,
+    "note": "metres from the player, at least"
+   },
+   {
+    "id": "max_distance",
+    "value": 40.0,
+    "note": "metres from the player, at most"
+   },
+   {
+    "id": "health_per_difficulty",
+    "value": 0.35,
+    "note": "extra health per point of RoR2 difficulty coefficient above 1"
+   },
+   {
+    "id": "damage_per_difficulty",
+    "value": 0.25,
+    "note": "extra attack damage per point of RoR2 difficulty coefficient above 1"
+   }
+  ]
+ }
+}

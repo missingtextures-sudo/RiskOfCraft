@@ -1,0 +1,276 @@
+{
+ "sheet": "systems",
+ "about": "Every game system the mashup touches. One row per system: which game owns it, what the player gets, the hooks (hooks.json ids) and data tables (gameplay.json tables) it uses, the module that builds it, and how it is verified. verified is filled in only after a test in the running games.",
+ "columns": [
+  "id",
+  "owner",
+  "player_gets",
+  "hooks",
+  "data",
+  "module",
+  "verify_by",
+  "verified"
+ ],
+ "rows": [
+  {
+   "id": "link",
+   "owner": "both",
+   "player_gets": "both games start together and talk through shared memory (Rust link)",
+   "hooks": "mc_link",
+   "data": "-",
+   "module": "link/src/lib.rs",
+   "verify_by": "log: layout self-check PASS, ring self-test PASS, link up",
+   "verified": "2026-10-09: layout PASS (21 structs, 150 fields, C#+Rust), ring self-test PASS, link up with Minecraft 26.3 (pid 26892), relinks after RoR2 restarts"
+  },
+  {
+   "id": "movement",
+   "owner": "minecraft",
+   "player_gets": "walk, sprint, sneak, jump, fall with Minecraft physics on RoR2's terrain",
+   "hooks": "motor_velocity,motor_rotation,input_move,input_buttons",
+   "data": "-",
+   "module": "ror2/src/Player/Follower.cs",
+   "verify_by": "screenshot: standing on stage ground; log: feet within 0.1 of RoR2 ground",
+   "verified": "2026-10-09: body follows Minecraft feet on Titanic Plains/Siphoned Forest/Aqueduct; capsule 1.82 m; user walked and fought in a live run"
+  },
+  {
+   "id": "collision",
+   "owner": "ror2",
+   "player_gets": "RoR2's ground, rocks and walls are solid in Minecraft",
+   "hooks": "stage_start",
+   "data": "-",
+   "module": "ror2/src/World/CollisionExporter.cs",
+   "verify_by": "walk into a wall and up a slope",
+   "verified": "2026-10-09: Minecraft player stands on RoR2 ground (feet -159.57 vs ground -159.58 on golemplains)"
+  },
+  {
+   "id": "camera",
+   "owner": "minecraft",
+   "player_gets": "first person and both F5 views at Minecraft's eye",
+   "hooks": "camera",
+   "data": "-",
+   "module": "ror2/src/Player/CameraDriver.cs",
+   "verify_by": "log: camera apart under 1 cm standing",
+   "verified": "2026-10-09: camera within 0.9 cm of Minecraft's eye; F5 behind and front views screenshot (u_f5, w_blocks_f5)"
+  },
+  {
+   "id": "hud",
+   "owner": "minecraft",
+   "player_gets": "Minecraft's hotbar, hearts, hunger, XP bar, crosshair and every screen",
+   "hooks": "hud",
+   "data": "-",
+   "module": "ror2/src/Render/Overlay.cs",
+   "verify_by": "screenshot shows Minecraft HUD over the stage",
+   "verified": "2026-10-12: RoR2 health bar, skills, key-item slot hidden for the run; equipment slot by the hotbar with icon, name, [R] and cooldown 44 s (screenshot hud_cooldown). 2026-10-09: screenshots s1_b, t_barrel: hotbar, hearts, hunger, XP, crosshair, advancement toasts over RoR2"
+  },
+  {
+   "id": "inventory",
+   "owner": "minecraft",
+   "player_gets": "the real Minecraft inventory, crafting (2x2 and tables) and furnaces",
+   "hooks": "-",
+   "data": "-",
+   "module": "fabric/src/client/java/dev/skycraft/client/SkyClient.java",
+   "verify_by": "open inventory with E in a run",
+   "verified": "2026-10-09: E opens Minecraft inventory with 2x2 crafting over RoR2 (t_inventory)"
+  },
+  {
+   "id": "blocks",
+   "owner": "minecraft",
+   "player_gets": "place and break blocks in RoR2's stages, drawn in RoR2's scene",
+   "hooks": "mc_placed,stage_start",
+   "data": "commands",
+   "module": "ror2/src/Render/RenderRing.cs",
+   "verify_by": "screenshot of placed blocks",
+   "verified": "2026-10-09: placed planks/glowstone/leaves drawn in RoR2's scene with Hopoo's lit shader (y_lit, z_mixed); stage start clears placed blocks"
+  },
+  {
+   "id": "mining",
+   "owner": "minecraft",
+   "player_gets": "dig into the stage's ground, rocks and structures: the hole is cut out of RoR2's own meshes (drawn and solid) and lined with Minecraft blocks",
+   "hooks": "surface",
+   "data": "surfaces",
+   "module": "ror2/src/World/TerrainCutter.cs",
+   "verify_by": "dig ground, block lands in inventory",
+   "verified": "2026-10-12: digging with the stone pickaxe on Titanic Plains: 'dig: 15 cells cut out of RoR2's world' (cut pit and side tunnels visible from above and inside, stone walls, cobblestone dropped; screenshots dig2_fp, dig2_behind); Distant Roost dirt hole (dig_fp). 2026-10-09: digging Titanic Plains ground (sdDirt) gave a dirt block (t_inventory); the RoR2 surface still covers the hole from above (known limit)"
+  },
+  {
+   "id": "combat_out",
+   "owner": "both",
+   "player_gets": "Minecraft swords, axes and bows hit RoR2 monsters, damage scaled by RoR2's level and items",
+   "hooks": "mc_actors",
+   "data": "damage",
+   "module": "ror2/src/Game/Combat.cs",
+   "verify_by": "log: hit on a Lemurian with damage and its health drop",
+   "verified": "2026-10-09: user's sword hits 5 MC = 24 RoR2 on Lemurian (80 HP, 4 hits), arrows 7-10 MC killed Wisps"
+  },
+  {
+   "id": "combat_in",
+   "owner": "both",
+   "player_gets": "RoR2 monsters hurt Minecraft hearts (after RoR2 armor and items, then Minecraft armor)",
+   "hooks": "damage_in,buddha,mc_hurt",
+   "data": "damage",
+   "module": "ror2/src/Patches/HealthPatches.cs",
+   "verify_by": "log: RoR2 hit -> Minecraft health drop",
+   "verified": "2026-10-09: Wisp 5.3 / Lemurian 12 RoR2 damage arrived as 0.95 / 2.18 Minecraft health"
+  },
+  {
+   "id": "healing",
+   "owner": "both",
+   "player_gets": "RoR2 healing items and regen heal Minecraft hearts; Minecraft food heals too",
+   "hooks": "heal_in,mc_roc_command",
+   "data": "damage,commands",
+   "module": "ror2/src/Patches/HealthPatches.cs",
+   "verify_by": "log: heal command sent and applied",
+   "verified": "2026-10-09: RoR2 regen sent as riskofcraft heal 0.182 every second and run in Minecraft"
+  },
+  {
+   "id": "death",
+   "owner": "minecraft",
+   "player_gets": "dying in Minecraft is dying in the run",
+   "hooks": "suicide",
+   "data": "-",
+   "module": "ror2/src/Game/SteveRegistry.cs",
+   "verify_by": "log: Minecraft death -> RoR2 death",
+   "verified": "2026-10-09: /kill in Minecraft -> 'died in Minecraft; killing their body' -> RoR2 death (Cutscene dead)"
+  },
+  {
+   "id": "scaling",
+   "owner": "ror2",
+   "player_gets": "RoR2 levels and items raise Minecraft max health, speed, attack speed and jump",
+   "hooks": "mc_commands",
+   "data": "scaling,commands",
+   "module": "ror2/src/Game/Scaling.cs",
+   "verify_by": "log: attribute commands after a level up",
+   "verified": "2026-10-12: items Hoof x5, Syringe x5, Clover x2, Knurl x3 -> attribute commands max_health 41.8, movement_speed 0.17, attack_speed 7, luck 2, block_break_speed 1.75. 2026-10-09: attribute commands for movement_speed, attack_speed, jump_strength sent and run"
+  },
+  {
+   "id": "loot_chests",
+   "owner": "both",
+   "player_gets": "RoR2 chests, barrels and shrines also give a real Minecraft loot table roll",
+   "hooks": "interactions,mc_commands",
+   "data": "loot_chests,commands",
+   "module": "ror2/src/Game/Loot.cs",
+   "verify_by": "open a chest, Minecraft items arrive",
+   "verified": "2026-10-09: G on Barrel1 -> loot table chests/village/village_plains_house: apples, dandelion, sapling, emeralds, bundle (u_f5)"
+  },
+  {
+   "id": "loot_kills",
+   "owner": "both",
+   "player_gets": "monsters you kill drop their Minecraft mob loot and XP into your inventory",
+   "hooks": "deaths,mc_commands",
+   "data": "monsters,commands",
+   "module": "ror2/src/Game/Loot.cs",
+   "verify_by": "kill a Lemurian, rotten flesh or XP arrives",
+   "verified": "2026-10-09: user's Wisp kills -> entities/blaze loot + 5 XP; Lemurian -> entities/zombie"
+  },
+  {
+   "id": "run_start",
+   "owner": "both",
+   "player_gets": "every run starts with a cleared inventory and the starter kit",
+   "hooks": "run_start,mc_roc_command",
+   "data": "starter_kit,commands",
+   "module": "ror2/src/Game/RunStart.cs",
+   "verify_by": "inventory screenshot at run start",
+   "verified": "2026-10-09: every new run: reset_run, stone sword, bow, 32 arrows, 8 bread (screenshots t_barrel, s1_b)"
+  },
+  {
+   "id": "survivors",
+   "owner": "ror2",
+   "player_gets": "Steve is the only survivor; everyone plays Steve; the lobby shows Steve (your Minecraft skin) on the character pad",
+   "hooks": "survivor_hide,survivor_force,steve_name,lobby_mannequin",
+   "data": "-",
+   "module": "ror2/src/Game/Survivors.cs",
+   "verify_by": "character select shows only Steve",
+   "verified": "2026-10-12: lobby pad shows Steve in the player's skin facing the camera (screenshot lobby_steve). 2026-10-09: character select shows only Steve with the Minecraft description (s1_b lobby); 19 survivors hidden"
+  },
+  {
+   "id": "interact",
+   "owner": "ror2",
+   "player_gets": "G opens chests, uses shrines and starts the teleporter; R uses equipment",
+   "hooks": "input_buttons",
+   "data": "keybinds",
+   "module": "ror2/src/Input/InputBridge.cs",
+   "verify_by": "open a chest with G",
+   "verified": "2026-10-12: R used Disposable Missile Launcher (stock 1 -> 0, cooldown 43.5 s). 2026-10-09: G opened Barrel1 (RoR2 gold 15 -> 23 and Minecraft loot)"
+  },
+  {
+   "id": "steve_models",
+   "owner": "both",
+   "player_gets": "every player looks like a Minecraft player; your own model in F5",
+   "hooks": "body_renderers",
+   "data": "-",
+   "module": "ror2/src/Render/SteveModels.cs",
+   "verify_by": "screenshot in F5",
+   "verified": "2026-10-10: own skin (Missing_Textures) in F5 front and back with sleeves/trousers layer drawn by the legacy cutout shader: no black patches (screenshot skin_back); log 'material for texture 1 (Cutout) uses Legacy Shaders/Transparent/Cutout/Diffuse'. 2026-10-09 (local): own Minecraft model in F5 lit by RoR2, Commando hidden (8 renderers). Remote players: not tested (needs a second PC)"
+  },
+  {
+   "id": "multiplayer",
+   "owner": "ror2",
+   "player_gets": "co-op up to 4 through RoR2's own lobby; each player runs their own Minecraft",
+   "hooks": "net_start_client,net_start_server",
+   "data": "messages",
+   "module": "ror2/src/Net/SteveNet.cs",
+   "verify_by": "two-player run (needs a second PC and Steam account)",
+   "verified": ""
+  },
+  {
+   "id": "safety",
+   "owner": "ror2",
+   "player_gets": "if Minecraft closes, RoR2 gives back its own controls within seconds; if Steve is shoved under the ground, he is put back on top",
+   "hooks": "rescue",
+   "data": "-",
+   "module": "ror2/src/Player/Ownership.cs",
+   "verify_by": "kill Minecraft mid-run; RoR2 recovers. tp the Minecraft player into the ground; log 'rescue:' and Steve back on top",
+   "verified": "2026-10-10: Minecraft player tp'd 3 blocks into Siphoned/Distant Roost ground -> 'rescue: Steve was 4.2 m inside RoR2's ground ... put back on top' within a second, run continued (screenshot rescue_after). Link loss: 2026-10-09 killing Minecraft mid-run gave RoR2 its controls back."
+  },
+  {
+   "id": "nether",
+   "owner": "both",
+   "player_gets": "a lit Nether portal takes the run to The Nether: a lava-cave stage retextured with Minecraft's Nether blocks, Nether decorations, more chests and Nether loot, and a teleporter boss to move on",
+   "hooks": "mc_portal,mc_portal_dimension,advance_stage,scene_director,terrain_materials,mc_stage_commands",
+   "data": "portals,custom_stages,chest_tiers,loot_pools",
+   "module": "ror2/src/Game/CustomStages.cs",
+   "verify_by": "light a portal, step in, screenshot The Nether, open a Nether chest",
+   "verified": "2026-10-11: obsidian frame + nether_portal blocks, 2 s inside -> 'stepped into the Nether portal: the run goes to The Nether (dampcavesimple)'; credits 400 -> 640; 10 Nether chests; 1887 terrain renderers retextured netherrack/basalt with red fog (screenshots nether_1/2, nether_chest). Teleporter fight onward not yet played through."
+  },
+  {
+   "id": "the_end",
+   "owner": "both",
+   "player_gets": "on stage 5 a stronghold End portal frame waits near the teleporter; with 12 eyes it takes the run to The End: Minecraft's Ender Dragon, health scaled by difficulty; killing it plays Minecraft's End Poem and credits, then wins the run (no RoR2 outro)",
+   "hooks": "mc_portal,mc_dragon_death,advance_stage,game_over,teleporter_pos,mc_stage_commands,terrain_materials,mc_credits_done,game_over_state",
+   "data": "portals,custom_stages,end_portal_frame,dragon",
+   "module": "ror2/src/Game/CustomStages.cs",
+   "verify_by": "frame on stage 5, enter, dragon fight screenshot, kill -> victory",
+   "verified": "2026-10-11: stage 5 'End portal frame 14 m from the teleporter' (4 of 12 eyes); portal filled + stepped in -> 'the run goes to The End (mysteryspace)'; arena (10 pillars, crystals, 2 cages) and Ender Dragon 271 health with boss bar (screenshot end_1); dragon death -> Minecraft's End Poem and credits (end_credits2); credits closed -> 'the run ends in victory', 'RoR2's outro skipped' -> Victory report without Minecraft's HUD (end_report). End terrain still reads dark."
+  },
+  {
+   "id": "mc_chests",
+   "owner": "both",
+   "player_gets": "real Minecraft chests on every stage, more and better the further and harder the run, with a small chance of the rarest items",
+   "hooks": "ground_nodes,mc_stage_commands,mc_loot_tables",
+   "data": "chest_tiers,loot_pools,rare_items",
+   "module": "ror2/src/Game/ChestSpawner.cs",
+   "verify_by": "chests visible on stage 1 and stage 3; open one",
+   "verified": "2026-10-11: stage 1 'chests: 3 Minecraft chests of tier_1'; chest drawn on the ground (screenshot chest_spot) and right-click opens it with tier-1 loot (string, leather, seeds, golden apples, horse armour, redstone; screenshot chest_open). Nether: 10 tier_nether chests, drawn (screenshot nether_chest)."
+  },
+  {
+   "id": "lunar_shop",
+   "owner": "both",
+   "player_gets": "in the Bazaar: Minecraft terminals selling elytra, shulker boxes, totems and more for lunar coins, and master villagers to trade with",
+   "hooks": "shop_terminal,mc_stage_commands",
+   "data": "rare_items,lunar_shop,villagers",
+   "module": "ror2/src/Game/LunarShop.cs",
+   "verify_by": "Bazaar screenshot with terminals, item displays and villagers; buy one",
+   "verified": "2026-10-11: Bazaar: 'shop: 5 Minecraft terminals' (rare items with lunar prices) and '6 villagers stand by the Bazaar counter', drawn with Minecraft textures (screenshot bazaar_villagers); prompt '[G] Buy Nether Star (Minecraft) (5 lunar)'; a paid terminal gave the item to Minecraft's inventory (Shulker Box, screenshot bazaar_bought; Ender Chest)."
+  },
+  {
+   "id": "nether_mobs",
+   "owner": "minecraft",
+   "player_gets": "Minecraft's Nether mobs (zombified piglins, magma cubes, piglins, blazes, wither skeletons, hoglins, ghasts) spawn around you on The Nether stage, tougher with RoR2's difficulty",
+   "hooks": "mc_stage_commands",
+   "data": "nether_mobs,nether_spawning,commands",
+   "module": "ror2/src/Game/NetherMobs.cs",
+   "verify_by": "on The Nether: log stage_mob commands and see Nether mobs fight Steve",
+   "verified": ""
+  }
+ ]
+}

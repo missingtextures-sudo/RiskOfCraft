@@ -1,0 +1,190 @@
+{
+  "sheet": "protocol_structs",
+  "about": "Every shared-memory struct the RoR2 host and the Rust link read or write. One row per struct. size must equal the static_assert in protocol/riskofcraft_protocol.h. Fields are rows in protocol_fields.json.",
+  "columns": [
+    "id",
+    "c_name",
+    "size",
+    "direction",
+    "shape",
+    "used_by"
+  ],
+  "rows": [
+    {
+      "id": "Header",
+      "c_name": "Header",
+      "size": 32,
+      "direction": "both",
+      "shape": "fixed",
+      "used_by": "link heartbeat, pids"
+    },
+    {
+      "id": "HostState",
+      "c_name": "SkyState",
+      "size": 64,
+      "direction": "host->guest",
+      "shape": "seqlock",
+      "used_by": "ownership, collision epoch, look, viewport"
+    },
+    {
+      "id": "GuestState",
+      "c_name": "McState",
+      "size": 200,
+      "direction": "guest->host",
+      "shape": "seqlock",
+      "used_by": "follower, camera, flags"
+    },
+    {
+      "id": "OverlaySlotHdr",
+      "c_name": "OverlaySlotHdr",
+      "size": 64,
+      "direction": "guest->host",
+      "shape": "triple",
+      "used_by": "overlay"
+    },
+    {
+      "id": "InputEvent",
+      "c_name": "InputEvent",
+      "size": 16,
+      "direction": "host->guest",
+      "shape": "entry",
+      "used_by": "input bridge, hurt"
+    },
+    {
+      "id": "GuestEvent",
+      "c_name": "McEvent",
+      "size": 32,
+      "direction": "guest->host",
+      "shape": "entry",
+      "used_by": "combat, death"
+    },
+    {
+      "id": "ActorRecord",
+      "c_name": "ActorRecord",
+      "size": 64,
+      "direction": "host->guest",
+      "shape": "seqlock",
+      "used_by": "actor exporter"
+    },
+    {
+      "id": "WorldEntity",
+      "c_name": "WorldEntity",
+      "size": 96,
+      "direction": "guest->host",
+      "shape": "seqlock",
+      "used_by": "world entities draw"
+    },
+    {
+      "id": "MsgHeader",
+      "c_name": "ColMsgHeader",
+      "size": 8,
+      "direction": "both",
+      "shape": "byte",
+      "used_by": "collision ring, render ring"
+    },
+    {
+      "id": "ColRegion",
+      "c_name": "ColRegion",
+      "size": 32,
+      "direction": "host->guest",
+      "shape": "byte",
+      "used_by": "collision exporter"
+    },
+    {
+      "id": "ColBlock",
+      "c_name": "ColBlock",
+      "size": 80,
+      "direction": "host->guest",
+      "shape": "byte",
+      "used_by": "collision exporter"
+    },
+    {
+      "id": "ColTri",
+      "c_name": "ColTri",
+      "size": 40,
+      "direction": "host->guest",
+      "shape": "byte",
+      "used_by": "collision exporter"
+    },
+    {
+      "id": "RenVertex",
+      "c_name": "RenVertex",
+      "size": 32,
+      "direction": "guest->host",
+      "shape": "byte",
+      "used_by": "render ring"
+    },
+    {
+      "id": "RenSection",
+      "c_name": "RenSection",
+      "size": 16,
+      "direction": "guest->host",
+      "shape": "byte",
+      "used_by": "render ring"
+    },
+    {
+      "id": "RenAtlas",
+      "c_name": "RenAtlas",
+      "size": 8,
+      "direction": "guest->host",
+      "shape": "byte",
+      "used_by": "render ring"
+    },
+    {
+      "id": "RenAtlasRegion",
+      "c_name": "RenAtlasRegion",
+      "size": 16,
+      "direction": "guest->host",
+      "shape": "byte",
+      "used_by": "render ring"
+    },
+    {
+      "id": "RenTexture",
+      "c_name": "RenTexture",
+      "size": 16,
+      "direction": "guest->host",
+      "shape": "byte",
+      "used_by": "render ring"
+    },
+    {
+      "id": "RenAvatar",
+      "c_name": "RenAvatar",
+      "size": 8,
+      "direction": "guest->host",
+      "shape": "byte",
+      "used_by": "render ring"
+    },
+    {
+      "id": "RenScene",
+      "c_name": "RenScene",
+      "size": 32,
+      "direction": "guest->host",
+      "shape": "byte",
+      "used_by": "render ring"
+    },
+    {
+      "id": "RenBatch",
+      "c_name": "RenBatch",
+      "size": 16,
+      "direction": "guest->host",
+      "shape": "byte",
+      "used_by": "render ring"
+    },
+    {
+      "id": "HostCommand",
+      "c_name": "HostCommand",
+      "size": 192,
+      "direction": "host->guest",
+      "shape": "entry",
+      "used_by": "run start, loot, scaling, healing"
+    },
+    {
+      "id": "RenDug",
+      "c_name": "RenDug",
+      "size": 24,
+      "direction": "guest->host",
+      "shape": "byte",
+      "used_by": "under-the-map rescue (which cells the player dug)"
+    }
+  ]
+}

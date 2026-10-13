@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "skycraft",
+  "version": "${version}",
+  "name": "RiskOfCraft guest (SkyCraft)",
+  "description": "RiskOfCraft's Minecraft half: Minecraft runs hidden next to Risk of Rain 2 and owns the player's physics, inventory and HUD. Based on SkyCraft by chasmlol.",
+  "authors": [
+    "chasmlol (SkyCraft)",
+    "RiskOfCraft"
+  ],
+  "contact": {
+    "sources": "https://github.com/chasmlol/SkyCraft"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "dev.skycraft.SkyCraft"
+    ],
+    "client": [
+      "dev.skycraft.client.SkyCraftClient"
+    ]
+  },
+  "mixins": [
+    "skycraft.mixins.json",
+    {
+      "config": "skycraft.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

@@ -1,0 +1,54 @@
+waitscene title 120
+sleep 3
+host
+waitscene lobby 60
+sleep 4
+startrun
+sleep 20
+exitpod
+sleep 3
+exitpod
+waitbody 60
+sleep 3
+mc effect give @s minecraft:resistance infinite 4 true
+mc effect give @s minecraft:regeneration infinite 4 true
+view 0
+log test: stage-1 Minecraft chests
+goto_spot chest
+sleep 2
+face_spot chest
+sleep 0.5
+shot chest_spot
+mouse 3 1
+sleep 0.2
+mouse 3 0
+sleep 1.5
+shot chest_open
+key 41 1
+sleep 0.2
+key 41 0
+sleep 1
+log test: Nether portal (obsidian frame + portal blocks, then step in for 2 s)
+mc fill ~2 ~-1 ~-1 ~2 ~3 ~2 minecraft:obsidian
+mc fill ~2 ~ ~ ~2 ~2 ~1 minecraft:nether_portal[axis=z]
+sleep 1
+look 270 5
+shot portal_frame
+mc tp @s ~2 ~ ~0.5
+waitscene dampcavesimple 120
+waitbody 90
+sleep 12
+shot nether_1
+look 90 10
+sleep 1
+shot nether_2
+look 0 -5
+sleep 1
+shot nether_3
+goto_spot chest
+sleep 2
+face_spot chest
+sleep 0.5
+shot nether_chest
+probe
+log done

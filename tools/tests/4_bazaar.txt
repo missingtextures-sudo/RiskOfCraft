@@ -1,0 +1,46 @@
+waitscene title 120
+sleep 3
+host
+waitscene lobby 60
+sleep 4
+startrun
+sleep 20
+exitpod
+sleep 3
+exitpod
+waitbody 60
+sleep 3
+mc effect give @s minecraft:resistance infinite 4 true
+mc effect give @s minecraft:regeneration infinite 4 true
+view 0
+log test: Minecraft in the Bazaar
+stage bazaar
+waitscene bazaar 120
+waitbody 90
+sleep 10
+goto_terminal
+sleep 2
+shot bazaar_terminal
+goto_spot villagers
+sleep 2
+face_spot villagers
+sleep 1
+shot bazaar_villagers
+view 1
+sleep 1
+shot bazaar_villagers_f5
+view 0
+goto_terminal
+sleep 1
+buy_mc
+sleep 2
+key 8 1
+sleep 0.2
+key 8 0
+sleep 1.5
+shot bazaar_bought
+key 41 1
+sleep 0.2
+key 41 0
+probe
+log done

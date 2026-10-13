@@ -1,0 +1,16 @@
+# Build output
+dist/
+fabric/build/
+fabric/.gradle/
+fabric/run/
+link/target/
+ror2/bin/
+ror2/obj/
+**/__pycache__/
+
+# Local tools and notes
+graphify-out/
+ref/
+melty-bug-report.md
+melty-discord-post.md
+*.log

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "mode": "installed",
+  "games": [
+    {
+      "slug": "risk-of-rain-2",
+      "role": "primary"
+    },
+    {
+      "slug": "minecraft-java",
+      "role": "companion"
+    }
+  ],
+  "components": [
+    {
+      "id": "main",
+      "kind": "main",
+      "fileName": "RiskOfCraft-*.zip",
+      "label": "RiskOfCraft (Risk of Rain 2 plugin and Rust link)",
+      "required": true
+    },
+    {
+      "id": "minecraft",
+      "kind": "extra",
+      "fileName": "RiskOfCraft-Minecraft-*.zip",
+      "label": "RiskOfCraft's Minecraft (Prism Launcher with the RiskOfCraft instance)",
+      "required": true
+    }
+  ],
+  "requirements": [
+    {
+      "kind": "loader",
+      "id": "bepinex-5"
+    }
+  ],
+  "mappings": [
+    {
+      "component": "main",
+      "from": "plugins/",
+      "to": "{game}/BepInEx/plugins"
+    },
+    {
+      "component": "minecraft",
+      "from": "",
+      "to": "{localappdata}/RiskOfCraft"
+    }
+  ],
+  "launch": {
+    "kind": "game"
+  },
+  "setup": {
+    "label": "Minecraft",
+    "launch": {
+      "kind": "exe",
+      "path": "{localappdata}/RiskOfCraft/Prism/prismlauncher.exe",
+      "args": [
+        "--launch",
+        "RiskOfCraft"
+      ]
+    },
+    "done": {
+      "file": "{localappdata}/RiskOfCraft/Prism/instances/RiskOfCraft/.minecraft/logs/latest.log",
+      "contains": "Backend library:"
+    },
+    "stopWhenDone": true
+  },
+  "together": [
+    {
+      "launch": {
+        "kind": "exe",
+        "path": "{localappdata}/RiskOfCraft/Prism/prismlauncher.exe",
+        "args": [
+          "--launch",
+          "RiskOfCraft"
+        ]
+      },
+      "startFirst": true,
+      "waitSeconds": 20
+    }
+  ],
+  "runtimeData": [
+    "{localappdata}/RiskOfCraft"
+  ],
+  "multiplayer": {
+    "maxPlayers": 4
+  },
+  "notes": {
+    "firstLaunch": "The first Play opens Prism Launcher once: sign in with the Microsoft account that owns Minecraft: Java Edition. Prism then downloads Minecraft 26.3, Fabric and Java (a few minutes) and RiskOfCraft starts. Later Plays start straight away."
+  },
+  "test": {
+    "checks": [
+      "minecraft-linked",
+      "steve-in-run",
+      "minecraft-hud",
+      "chests-placed",
+      "dig-cuts"
+    ],
+    "minutes": 5
+  }
+}

@@ -1,0 +1,1105 @@
+{
+  "sheet": "protocol_fields",
+  "about": "One row per field of a shared-memory struct, in order. offset is the byte offset the header fixes; the generator recomputes it from the types and the preflight fails on any difference.",
+  "columns": [
+    "struct",
+    "field",
+    "type",
+    "offset",
+    "note"
+  ],
+  "rows": [
+    {
+      "struct": "Header",
+      "field": "magic",
+      "type": "u32",
+      "offset": 0,
+      "note": "\"SKYC\", written last by the host"
+    },
+    {
+      "struct": "Header",
+      "field": "version",
+      "type": "u32",
+      "offset": 4,
+      "note": "protocol version"
+    },
+    {
+      "struct": "Header",
+      "field": "hostPid",
+      "type": "u32",
+      "offset": 8,
+      "note": "Risk of Rain 2's pid"
+    },
+    {
+      "struct": "Header",
+      "field": "guestPid",
+      "type": "u32",
+      "offset": 12,
+      "note": "Minecraft's pid"
+    },
+    {
+      "struct": "Header",
+      "field": "hostHeartbeatMs",
+      "type": "u64",
+      "offset": 16,
+      "note": "GetTickCount64 at the host's last frame"
+    },
+    {
+      "struct": "Header",
+      "field": "guestHeartbeatMs",
+      "type": "u64",
+      "offset": 24,
+      "note": "GetTickCount64 at Minecraft's last frame"
+    },
+    {
+      "struct": "HostState",
+      "field": "seq",
+      "type": "u32",
+      "offset": 0,
+      "note": "seqlock"
+    },
+    {
+      "struct": "HostState",
+      "field": "flags",
+      "type": "u32",
+      "offset": 4,
+      "note": "HostFlags"
+    },
+    {
+      "struct": "HostState",
+      "field": "worldId",
+      "type": "u32",
+      "offset": 8,
+      "note": "stage scene index + 1"
+    },
+    {
+      "struct": "HostState",
+      "field": "collisionEpoch",
+      "type": "u32",
+      "offset": 12,
+      "note": "bumps on stage change"
+    },
+    {
+      "struct": "HostState",
+      "field": "posX",
+      "type": "f64",
+      "offset": 16,
+      "note": "host feet, MC coords"
+    },
+    {
+      "struct": "HostState",
+      "field": "posY",
+      "type": "f64",
+      "offset": 24,
+      "note": ""
+    },
+    {
+      "struct": "HostState",
+      "field": "posZ",
+      "type": "f64",
+      "offset": 32,
+      "note": ""
+    },
+    {
+      "struct": "HostState",
+      "field": "yaw",
+      "type": "f32",
+      "offset": 40,
+      "note": "authoritative look, MC degrees"
+    },
+    {
+      "struct": "HostState",
+      "field": "pitch",
+      "type": "f32",
+      "offset": 44,
+      "note": ""
+    },
+    {
+      "struct": "HostState",
+      "field": "teleportSeq",
+      "type": "u32",
+      "offset": 48,
+      "note": "MC teleports to pos when this changes"
+    },
+    {
+      "struct": "HostState",
+      "field": "viewportW",
+      "type": "u32",
+      "offset": 52,
+      "note": ""
+    },
+    {
+      "struct": "HostState",
+      "field": "viewportH",
+      "type": "u32",
+      "offset": 56,
+      "note": ""
+    },
+    {
+      "struct": "HostState",
+      "field": "gameHour",
+      "type": "f32",
+      "offset": 60,
+      "note": "MC daylight"
+    },
+    {
+      "struct": "GuestState",
+      "field": "seq",
+      "type": "u32",
+      "offset": 0,
+      "note": "seqlock"
+    },
+    {
+      "struct": "GuestState",
+      "field": "flags",
+      "type": "u32",
+      "offset": 4,
+      "note": "GuestFlags"
+    },
+    {
+      "struct": "GuestState",
+      "field": "x",
+      "type": "f64",
+      "offset": 8,
+      "note": "interpolated feet"
+    },
+    {
+      "struct": "GuestState",
+      "field": "y",
+      "type": "f64",
+      "offset": 16,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "z",
+      "type": "f64",
+      "offset": 24,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "yaw",
+      "type": "f32",
+      "offset": 32,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "pitch",
+      "type": "f32",
+      "offset": 36,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "eyeHeight",
+      "type": "f32",
+      "offset": 40,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "sensitivity",
+      "type": "f32",
+      "offset": 44,
+      "note": "MC mouse sensitivity 0..1"
+    },
+    {
+      "struct": "GuestState",
+      "field": "teleportAck",
+      "type": "u32",
+      "offset": 48,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "guiScale",
+      "type": "u32",
+      "offset": 52,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "frameCounter",
+      "type": "u64",
+      "offset": 56,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "fovDeg",
+      "type": "f32",
+      "offset": 64,
+      "note": "vertical"
+    },
+    {
+      "struct": "GuestState",
+      "field": "bobPhase",
+      "type": "f32",
+      "offset": 68,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "bobAmount",
+      "type": "f32",
+      "offset": 72,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "pad4C",
+      "type": "u32",
+      "offset": 76,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "eyeX",
+      "type": "f64",
+      "offset": 80,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "eyeY",
+      "type": "f64",
+      "offset": 88,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "eyeZ",
+      "type": "f64",
+      "offset": 96,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "tickQpc",
+      "type": "i64",
+      "offset": 104,
+      "note": "QPC at the latest tick"
+    },
+    {
+      "struct": "GuestState",
+      "field": "prevX",
+      "type": "f64",
+      "offset": 112,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "prevY",
+      "type": "f64",
+      "offset": 120,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "prevZ",
+      "type": "f64",
+      "offset": 128,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "curX",
+      "type": "f64",
+      "offset": 136,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "curY",
+      "type": "f64",
+      "offset": 144,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "curZ",
+      "type": "f64",
+      "offset": 152,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "tickEyeO",
+      "type": "f32",
+      "offset": 160,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "tickEye",
+      "type": "f32",
+      "offset": 164,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "walkDistO",
+      "type": "f32",
+      "offset": 168,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "walkDist",
+      "type": "f32",
+      "offset": 172,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "bobO",
+      "type": "f32",
+      "offset": 176,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "bob",
+      "type": "f32",
+      "offset": 180,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "tickMs",
+      "type": "f32",
+      "offset": 184,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "tickPad",
+      "type": "u32",
+      "offset": 188,
+      "note": ""
+    },
+    {
+      "struct": "GuestState",
+      "field": "cameraMode",
+      "type": "u32",
+      "offset": 192,
+      "note": "0 first person, 1 behind, 2 front"
+    },
+    {
+      "struct": "GuestState",
+      "field": "cameraDistance",
+      "type": "f32",
+      "offset": 196,
+      "note": ""
+    },
+    {
+      "struct": "OverlaySlotHdr",
+      "field": "width",
+      "type": "u32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "OverlaySlotHdr",
+      "field": "height",
+      "type": "u32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "OverlaySlotHdr",
+      "field": "flags",
+      "type": "u32",
+      "offset": 8,
+      "note": "bit0 bottom-up rows"
+    },
+    {
+      "struct": "OverlaySlotHdr",
+      "field": "pad",
+      "type": "u32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "OverlaySlotHdr",
+      "field": "frameId",
+      "type": "u64",
+      "offset": 16,
+      "note": ""
+    },
+    {
+      "struct": "OverlaySlotHdr",
+      "field": "reserved",
+      "type": "u8[40]",
+      "offset": 24,
+      "note": ""
+    },
+    {
+      "struct": "InputEvent",
+      "field": "type",
+      "type": "u16",
+      "offset": 0,
+      "note": "InputType"
+    },
+    {
+      "struct": "InputEvent",
+      "field": "code",
+      "type": "u16",
+      "offset": 2,
+      "note": ""
+    },
+    {
+      "struct": "InputEvent",
+      "field": "a",
+      "type": "i32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "InputEvent",
+      "field": "b",
+      "type": "i32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "InputEvent",
+      "field": "c",
+      "type": "i32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "GuestEvent",
+      "field": "type",
+      "type": "u32",
+      "offset": 0,
+      "note": "McEventType"
+    },
+    {
+      "struct": "GuestEvent",
+      "field": "formId",
+      "type": "u32",
+      "offset": 4,
+      "note": "actor id"
+    },
+    {
+      "struct": "GuestEvent",
+      "field": "a",
+      "type": "f32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "GuestEvent",
+      "field": "b",
+      "type": "f32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "GuestEvent",
+      "field": "c",
+      "type": "f32",
+      "offset": 16,
+      "note": ""
+    },
+    {
+      "struct": "GuestEvent",
+      "field": "d",
+      "type": "f32",
+      "offset": 20,
+      "note": ""
+    },
+    {
+      "struct": "GuestEvent",
+      "field": "flags",
+      "type": "u32",
+      "offset": 24,
+      "note": "HitFlags"
+    },
+    {
+      "struct": "GuestEvent",
+      "field": "weapon",
+      "type": "u32",
+      "offset": 28,
+      "note": "HitWeapon"
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "formId",
+      "type": "u32",
+      "offset": 0,
+      "note": "RoR2 network id of the body"
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "flags",
+      "type": "u32",
+      "offset": 4,
+      "note": "ActorFlags"
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "x",
+      "type": "f32",
+      "offset": 8,
+      "note": "feet, MC coords"
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "y",
+      "type": "f32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "z",
+      "type": "f32",
+      "offset": 16,
+      "note": ""
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "yaw",
+      "type": "f32",
+      "offset": 20,
+      "note": ""
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "width",
+      "type": "f32",
+      "offset": 24,
+      "note": "blocks"
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "height",
+      "type": "f32",
+      "offset": 28,
+      "note": "blocks"
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "healthFrac",
+      "type": "f32",
+      "offset": 32,
+      "note": ""
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "level",
+      "type": "u16",
+      "offset": 36,
+      "note": ""
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "pad",
+      "type": "u16",
+      "offset": 38,
+      "note": ""
+    },
+    {
+      "struct": "ActorRecord",
+      "field": "name",
+      "type": "u8[24]",
+      "offset": 40,
+      "note": "UTF-8, NUL-terminated"
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "kind",
+      "type": "u32",
+      "offset": 0,
+      "note": "WorldEntityKind"
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "id",
+      "type": "u32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "x",
+      "type": "f32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "y",
+      "type": "f32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "z",
+      "type": "f32",
+      "offset": 16,
+      "note": ""
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "yaw",
+      "type": "f32",
+      "offset": 20,
+      "note": ""
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "pitch",
+      "type": "f32",
+      "offset": 24,
+      "note": ""
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "scale",
+      "type": "f32",
+      "offset": 28,
+      "note": ""
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "ext",
+      "type": "f32[3]",
+      "offset": 32,
+      "note": "crack box size"
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "uv",
+      "type": "f32[12]",
+      "offset": 44,
+      "note": "three atlas rects"
+    },
+    {
+      "struct": "WorldEntity",
+      "field": "tint",
+      "type": "u32",
+      "offset": 92,
+      "note": "RGBA8"
+    },
+    {
+      "struct": "MsgHeader",
+      "field": "type",
+      "type": "u32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "MsgHeader",
+      "field": "payloadBytes",
+      "type": "u32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "ColRegion",
+      "field": "minX",
+      "type": "i32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "ColRegion",
+      "field": "minY",
+      "type": "i32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "ColRegion",
+      "field": "minZ",
+      "type": "i32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "ColRegion",
+      "field": "maxX",
+      "type": "i32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "ColRegion",
+      "field": "maxY",
+      "type": "i32",
+      "offset": 16,
+      "note": ""
+    },
+    {
+      "struct": "ColRegion",
+      "field": "maxZ",
+      "type": "i32",
+      "offset": 20,
+      "note": ""
+    },
+    {
+      "struct": "ColRegion",
+      "field": "epoch",
+      "type": "u32",
+      "offset": 24,
+      "note": ""
+    },
+    {
+      "struct": "ColRegion",
+      "field": "count",
+      "type": "u32",
+      "offset": 28,
+      "note": ""
+    },
+    {
+      "struct": "ColBlock",
+      "field": "x",
+      "type": "i32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "ColBlock",
+      "field": "y",
+      "type": "i32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "ColBlock",
+      "field": "z",
+      "type": "i32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "ColBlock",
+      "field": "pad",
+      "type": "u32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "ColBlock",
+      "field": "bits",
+      "type": "u64[8]",
+      "offset": 16,
+      "note": "bits[y] bit z*8+x"
+    },
+    {
+      "struct": "ColTri",
+      "field": "v",
+      "type": "f32[9]",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "ColTri",
+      "field": "flags",
+      "type": "u32",
+      "offset": 36,
+      "note": "ColTriFlags, bits 8-15 DigMaterial"
+    },
+    {
+      "struct": "RenVertex",
+      "field": "x",
+      "type": "f32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "RenVertex",
+      "field": "y",
+      "type": "f32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "RenVertex",
+      "field": "z",
+      "type": "f32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "RenVertex",
+      "field": "u",
+      "type": "f32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "RenVertex",
+      "field": "v",
+      "type": "f32",
+      "offset": 16,
+      "note": ""
+    },
+    {
+      "struct": "RenVertex",
+      "field": "color",
+      "type": "u32",
+      "offset": 20,
+      "note": "RGBA8"
+    },
+    {
+      "struct": "RenVertex",
+      "field": "light",
+      "type": "u32",
+      "offset": 24,
+      "note": "block light, sky light"
+    },
+    {
+      "struct": "RenVertex",
+      "field": "flags",
+      "type": "u32",
+      "offset": 28,
+      "note": "cutout, translucent, normal"
+    },
+    {
+      "struct": "RenSection",
+      "field": "sx",
+      "type": "i32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "RenSection",
+      "field": "sy",
+      "type": "i32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "RenSection",
+      "field": "sz",
+      "type": "i32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "RenSection",
+      "field": "vertexCount",
+      "type": "u32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "RenAtlas",
+      "field": "width",
+      "type": "u32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "RenAtlas",
+      "field": "height",
+      "type": "u32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "RenAtlasRegion",
+      "field": "x",
+      "type": "u32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "RenAtlasRegion",
+      "field": "y",
+      "type": "u32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "RenAtlasRegion",
+      "field": "width",
+      "type": "u32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "RenAtlasRegion",
+      "field": "height",
+      "type": "u32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "RenTexture",
+      "field": "id",
+      "type": "u32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "RenTexture",
+      "field": "width",
+      "type": "u32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "RenTexture",
+      "field": "height",
+      "type": "u32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "RenTexture",
+      "field": "pad",
+      "type": "u32",
+      "offset": 12,
+      "note": ""
+    },
+    {
+      "struct": "RenAvatar",
+      "field": "batchCount",
+      "type": "u32",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "RenAvatar",
+      "field": "vertexCount",
+      "type": "u32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "RenScene",
+      "field": "originX",
+      "type": "f64",
+      "offset": 0,
+      "note": ""
+    },
+    {
+      "struct": "RenScene",
+      "field": "originY",
+      "type": "f64",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "RenScene",
+      "field": "originZ",
+      "type": "f64",
+      "offset": 16,
+      "note": ""
+    },
+    {
+      "struct": "RenScene",
+      "field": "batchCount",
+      "type": "u32",
+      "offset": 24,
+      "note": ""
+    },
+    {
+      "struct": "RenScene",
+      "field": "vertexCount",
+      "type": "u32",
+      "offset": 28,
+      "note": ""
+    },
+    {
+      "struct": "RenBatch",
+      "field": "texture",
+      "type": "u32",
+      "offset": 0,
+      "note": "0 atlas"
+    },
+    {
+      "struct": "RenBatch",
+      "field": "first",
+      "type": "u32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "RenBatch",
+      "field": "count",
+      "type": "u32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "RenBatch",
+      "field": "flags",
+      "type": "u32",
+      "offset": 12,
+      "note": "bit0 translucent"
+    },
+    {
+      "struct": "HostCommand",
+      "field": "id",
+      "type": "u32",
+      "offset": 0,
+      "note": "running number, for the guest log"
+    },
+    {
+      "struct": "HostCommand",
+      "field": "length",
+      "type": "u32",
+      "offset": 4,
+      "note": "bytes of text used"
+    },
+    {
+      "struct": "HostCommand",
+      "field": "text",
+      "type": "u8[184]",
+      "offset": 8,
+      "note": "a Minecraft command, UTF-8, no leading slash"
+    },
+    {
+      "struct": "RenDug",
+      "field": "sx",
+      "type": "i32",
+      "offset": 0,
+      "note": "section coords"
+    },
+    {
+      "struct": "RenDug",
+      "field": "sy",
+      "type": "i32",
+      "offset": 4,
+      "note": ""
+    },
+    {
+      "struct": "RenDug",
+      "field": "sz",
+      "type": "i32",
+      "offset": 8,
+      "note": ""
+    },
+    {
+      "struct": "RenDug",
+      "field": "count",
+      "type": "u32",
+      "offset": 12,
+      "note": "dug blocks; 0 = none and no bitset follows"
+    },
+    {
+      "struct": "RenDug",
+      "field": "worldId",
+      "type": "u32",
+      "offset": 16,
+      "note": "HostState.worldId the bits belong to"
+    },
+    {
+      "struct": "RenDug",
+      "field": "pad",
+      "type": "u32",
+      "offset": 20,
+      "note": ""
+    }
+  ]
+}

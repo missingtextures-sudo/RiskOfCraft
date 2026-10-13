@@ -1,0 +1,552 @@
+{
+ "sheet": "protocol_enums",
+ "about": "Named values of the protocol (flags, message and event types). One row per value, grouped by enum. Mirrors skycraft_protocol.h plus RiskOfCraft's command ring.",
+ "columns": [
+  "enum",
+  "name",
+  "value",
+  "note"
+ ],
+ "rows": [
+  {
+   "enum": "HostFlags",
+   "name": "InGame",
+   "value": "1",
+   "note": "a stage is loaded and the player's body exists"
+  },
+  {
+   "enum": "HostFlags",
+   "name": "MenuOpen",
+   "value": "2",
+   "note": "a RoR2 menu owns input; Minecraft drops held keys"
+  },
+  {
+   "enum": "HostFlags",
+   "name": "Loading",
+   "value": "4",
+   "note": "loading / cutscene; Minecraft parks its player"
+  },
+  {
+   "enum": "GuestFlags",
+   "name": "InWorld",
+   "value": "1",
+   "note": ""
+  },
+  {
+   "enum": "GuestFlags",
+   "name": "ScreenOpen",
+   "value": "2",
+   "note": "inventory, chat, pause..."
+  },
+  {
+   "enum": "GuestFlags",
+   "name": "OnGround",
+   "value": "4",
+   "note": ""
+  },
+  {
+   "enum": "GuestFlags",
+   "name": "Sneaking",
+   "value": "8",
+   "note": ""
+  },
+  {
+   "enum": "GuestFlags",
+   "name": "Sprinting",
+   "value": "16",
+   "note": ""
+  },
+  {
+   "enum": "GuestFlags",
+   "name": "Dead",
+   "value": "32",
+   "note": ""
+  },
+  {
+   "enum": "GuestFlags",
+   "name": "Swimming",
+   "value": "64",
+   "note": ""
+  },
+  {
+   "enum": "GuestFlags",
+   "name": "Flying",
+   "value": "128",
+   "note": ""
+  },
+  {
+   "enum": "GuestFlags",
+   "name": "PauseMenu",
+   "value": "256",
+   "note": "a Minecraft screen that pauses Minecraft is open (the pause menu, options): RoR2 pauses too in single player"
+  },
+  {
+   "enum": "InputType",
+   "name": "Key",
+   "value": "1",
+   "note": "code = SDL scancode, a = 1 press / 0 release"
+  },
+  {
+   "enum": "InputType",
+   "name": "MouseButton",
+   "value": "2",
+   "note": "code = SDL button"
+  },
+  {
+   "enum": "InputType",
+   "name": "Scroll",
+   "value": "3",
+   "note": "a = notches * 120"
+  },
+  {
+   "enum": "InputType",
+   "name": "Cursor",
+   "value": "4",
+   "note": "a, b = overlay pixels"
+  },
+  {
+   "enum": "InputType",
+   "name": "Text",
+   "value": "5",
+   "note": "a = code point"
+  },
+  {
+   "enum": "InputType",
+   "name": "ReleaseAll",
+   "value": "6",
+   "note": ""
+  },
+  {
+   "enum": "InputType",
+   "name": "Hurt",
+   "value": "7",
+   "note": "code = HurtKind, a = host damage * 100, b = attacker id"
+  },
+  {
+   "enum": "InputType",
+   "name": "OpenMenu",
+   "value": "8",
+   "note": ""
+  },
+  {
+   "enum": "HurtKind",
+   "name": "Melee",
+   "value": "0",
+   "note": ""
+  },
+  {
+   "enum": "HurtKind",
+   "name": "Projectile",
+   "value": "1",
+   "note": ""
+  },
+  {
+   "enum": "HurtKind",
+   "name": "Magic",
+   "value": "2",
+   "note": ""
+  },
+  {
+   "enum": "HurtKind",
+   "name": "Other",
+   "value": "3",
+   "note": ""
+  },
+  {
+   "enum": "EventType",
+   "name": "HitActor",
+   "value": "1",
+   "note": "formId, a = MC damage, b/c = knockback x/z, d = strength"
+  },
+  {
+   "enum": "EventType",
+   "name": "PlayerDied",
+   "value": "2",
+   "note": ""
+  },
+  {
+   "enum": "EventType",
+   "name": "Explosion",
+   "value": "3",
+   "note": "a/b/c centre, d radius"
+  },
+  {
+   "enum": "EventType",
+   "name": "ArrowStuck",
+   "value": "4",
+   "note": ""
+  },
+  {
+   "enum": "EventType",
+   "name": "SkillUse",
+   "value": "5",
+   "note": "Skyrim only; ignored"
+  },
+  {
+   "enum": "EventType",
+   "name": "PortalEntered",
+   "value": "6",
+   "note": "formId = 1 nether portal, 2 end portal (RiskOfCraft)"
+  },
+  {
+   "enum": "EventType",
+   "name": "DragonKilled",
+   "value": "7",
+   "note": "the player's Ender Dragon died (RiskOfCraft)"
+  },
+  {
+   "enum": "EventType",
+   "name": "CreditsDone",
+   "value": "8",
+   "note": "the player's End Poem and credits screen closed (RiskOfCraft)"
+  },
+  {
+   "enum": "EventType",
+   "name": "SetSpawns",
+   "value": "9",
+   "note": "testing: /riskofcraft spawns on|off (formId 1 on, 0 off) (RiskOfCraft)"
+  },
+  {
+   "enum": "HitFlags",
+   "name": "Critical",
+   "value": "1",
+   "note": ""
+  },
+  {
+   "enum": "HitFlags",
+   "name": "Projectile",
+   "value": "2",
+   "note": ""
+  },
+  {
+   "enum": "HitFlags",
+   "name": "Sweep",
+   "value": "4",
+   "note": ""
+  },
+  {
+   "enum": "HitFlags",
+   "name": "Fire",
+   "value": "8",
+   "note": ""
+  },
+  {
+   "enum": "HitWeapon",
+   "name": "Unarmed",
+   "value": "0",
+   "note": ""
+  },
+  {
+   "enum": "HitWeapon",
+   "name": "Blade",
+   "value": "1",
+   "note": ""
+  },
+  {
+   "enum": "HitWeapon",
+   "name": "Axe",
+   "value": "2",
+   "note": ""
+  },
+  {
+   "enum": "HitWeapon",
+   "name": "Blunt",
+   "value": "3",
+   "note": ""
+  },
+  {
+   "enum": "HitWeapon",
+   "name": "Pierce",
+   "value": "4",
+   "note": ""
+  },
+  {
+   "enum": "HitWeapon",
+   "name": "Arrow",
+   "value": "5",
+   "note": ""
+  },
+  {
+   "enum": "ActorFlags",
+   "name": "Hostile",
+   "value": "1",
+   "note": ""
+  },
+  {
+   "enum": "ActorFlags",
+   "name": "Dead",
+   "value": "2",
+   "note": ""
+  },
+  {
+   "enum": "ActorFlags",
+   "name": "Essential",
+   "value": "4",
+   "note": ""
+  },
+  {
+   "enum": "ActorFlags",
+   "name": "InCombat",
+   "value": "8",
+   "note": ""
+  },
+  {
+   "enum": "ColMsg",
+   "name": "Pad",
+   "value": "0",
+   "note": ""
+  },
+  {
+   "enum": "ColMsg",
+   "name": "Clear",
+   "value": "1",
+   "note": "payload u32 epoch"
+  },
+  {
+   "enum": "ColMsg",
+   "name": "Region",
+   "value": "2",
+   "note": "ColRegion + ColBlock[count]"
+  },
+  {
+   "enum": "ColMsg",
+   "name": "Tris",
+   "value": "3",
+   "note": "ColRegion + ColTri[count], before Region"
+  },
+  {
+   "enum": "TriFlags",
+   "name": "StairHelper",
+   "value": "1",
+   "note": ""
+  },
+  {
+   "enum": "TriFlags",
+   "name": "Diggable",
+   "value": "2",
+   "note": "bits 8-15: DigMaterial"
+  },
+  {
+   "enum": "TriFlags",
+   "name": "Ghost",
+   "value": "4",
+   "note": ""
+  },
+  {
+   "enum": "TriFlags",
+   "name": "Terrain",
+   "value": "8",
+   "note": ""
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Pad",
+   "value": "0",
+   "note": ""
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Atlas",
+   "value": "1",
+   "note": ""
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Section",
+   "value": "2",
+   "note": ""
+  },
+  {
+   "enum": "RenMsg",
+   "name": "ClearAll",
+   "value": "3",
+   "note": ""
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Texture",
+   "value": "4",
+   "note": ""
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Avatar",
+   "value": "5",
+   "note": ""
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Scene",
+   "value": "6",
+   "note": ""
+  },
+  {
+   "enum": "RenMsg",
+   "name": "AtlasRegion",
+   "value": "7",
+   "note": ""
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Lights",
+   "value": "8",
+   "note": "not drawn"
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Ragdoll",
+   "value": "9",
+   "note": "the standing body: remote Steves"
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Solids",
+   "value": "10",
+   "note": "not used"
+  },
+  {
+   "enum": "RenMsg",
+   "name": "Dug",
+   "value": "11",
+   "note": "not used"
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "None",
+   "value": "0",
+   "note": "stone"
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Grass",
+   "value": "1",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Dirt",
+   "value": "2",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Stone",
+   "value": "3",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Cobble",
+   "value": "4",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Snow",
+   "value": "5",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Ice",
+   "value": "6",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Sand",
+   "value": "7",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Gravel",
+   "value": "8",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Mud",
+   "value": "9",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "OakLog",
+   "value": "10",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "SpruceLog",
+   "value": "11",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "BirchLog",
+   "value": "12",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Planks",
+   "value": "13",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Metal",
+   "value": "14",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Glass",
+   "value": "15",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Organic",
+   "value": "16",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Cloth",
+   "value": "17",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Bone",
+   "value": "18",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Web",
+   "value": "19",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Ash",
+   "value": "20",
+   "note": ""
+  },
+  {
+   "enum": "DigMaterial",
+   "name": "Bedrock",
+   "value": "21",
+   "note": ""
+  },
+  {
+   "enum": "Overlay",
+   "name": "Dirty",
+   "value": "4",
+   "note": "bit 2 of OverlayCtl.state"
+  }
+ ]
+}

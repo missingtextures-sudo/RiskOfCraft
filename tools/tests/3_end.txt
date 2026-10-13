@@ -1,0 +1,50 @@
+waitscene title 120
+sleep 3
+host
+waitscene lobby 60
+sleep 4
+startrun
+sleep 20
+exitpod
+sleep 3
+exitpod
+waitbody 60
+sleep 3
+mc effect give @s minecraft:resistance infinite 4 true
+mc effect give @s minecraft:regeneration infinite 4 true
+view 0
+log test: stage 5 End portal frame near the teleporter
+stage skymeadow 3
+waitscene skymeadow 120
+waitbody 90
+sleep 10
+goto_spot endframe
+sleep 2
+shot endframe
+mc_at_spot endframe execute positioned {x} {y} {z} run fill ~-1 ~ ~-1 ~1 ~ ~1 minecraft:end_portal
+sleep 1
+shot endframe_open
+mc_at_spot endframe execute positioned {x} {y} {z} run tp @s ~0.5 ~ ~0.5
+waitscene mysteryspace 120
+waitbody 90
+sleep 15
+shot end_1
+look 90 -20
+sleep 1
+shot end_2
+look 200 -30
+sleep 1
+shot end_3
+probe
+log test: kill the Ender Dragon (the run should be won)
+mc kill @e[type=minecraft:ender_dragon]
+sleep 8
+shot end_credits
+sleep 6
+shot end_credits2
+key 41 1
+sleep 0.2
+key 41 0
+sleep 10
+shot end_report
+log done
