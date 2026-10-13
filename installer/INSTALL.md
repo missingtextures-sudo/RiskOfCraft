@@ -29,6 +29,7 @@ To remove RiskOfCraft, run **`Uninstall RiskOfCraft.bat`**. It asks before remov
 - **Melty players:** if you play RiskOfCraft through Melty, you don't need this installer; Melty installs everything itself. If Melty already manages your Risk of Rain 2, the installer warns you before turning mods on outside Melty.
 - **Close everything first:** close Risk of Rain 2 and Prism Launcher before you install, update or uninstall.
 - **Starting Minecraft by hand:** to stop RiskOfCraft starting Minecraft itself, set `StartWithGame = false` under `[Minecraft]` in `Risk of Rain 2\BepInEx\config\com.riskofcraft.riskofcraft.cfg`. Then open `%LOCALAPPDATA%\RiskOfCraft\Prism\prismlauncher.exe` and launch the RiskOfCraft instance yourself.
+- **More Minecraft mods:** RiskOfCraft's Minecraft comes with Fabric API, Mouse Tweaks, AppleSkin, Mod Menu and Resourcify. To add more, put Fabric mods for Minecraft 26.3 in `%LOCALAPPDATA%\RiskOfCraft\Prism\instances\RiskOfCraft\.minecraft\mods`. Leave out mods that replace Minecraft's renderer, such as Sodium. `README.md` has the full list.
 - **Script warning:** Windows may ask before running a downloaded script. The installer is plain PowerShell (`install.ps1`), so you can read it first.
 
 See `README.md` for what the mod does and its controls, and `THIRD-PARTY-NOTICES.md` for the bundled software and its licenses.

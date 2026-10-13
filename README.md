@@ -87,6 +87,38 @@ F5 switches the camera, T opens chat and Shift sneaks.
   sets up BepInEx, the plugin and RiskOfCraft's Minecraft; `INSTALL.md` inside the zip walks
   through it. Then start Risk of Rain 2 from Steam, and RiskOfCraft starts its Minecraft by itself.
 
+## Minecraft mods
+
+RiskOfCraft's Minecraft is its own Prism Launcher instance (Minecraft 26.3 with Fabric). It comes with:
+
+| Mod | Version | What it's for |
+|---|---|---|
+| RiskOfCraft (`riskofcraft-guest`) | 0.2.0 | The Minecraft side of RiskOfCraft. Required |
+| Fabric API | 0.162.0+26.3 | Required by RiskOfCraft and the other mods |
+| Mouse Tweaks | 2.31 | Better mouse handling in inventories |
+| AppleSkin | 3.0.10 | Shows food, saturation and exhaustion on the HUD |
+| Mod Menu | 21.0.0 | A Mods button for seeing and configuring mods |
+| Resourcify | 1.8.7 | Browse and install resource packs in game |
+| Fabric Language Kotlin | 1.14.2 | A library the mods above need |
+| Text Placeholder API | 3.2.0 | A library the mods above need |
+| Cloth Config | 26.3.159 | A library the mods above need |
+
+**Adding more mods:** put Fabric mods for Minecraft 26.3 in this folder (paste it into File
+Explorer's address bar):
+
+```
+%LOCALAPPDATA%\RiskOfCraft\Prism\instances\RiskOfCraft\.minecraft\mods
+```
+
+You can also open `%LOCALAPPDATA%\RiskOfCraft\Prism\prismlauncher.exe`, select the RiskOfCraft
+instance, then go to **Edit > Mods > Download mods** to search Modrinth and CurseForge. Resource
+packs go in `.minecraft\resourcepacks` next to the `mods` folder.
+
+- Only Fabric mods built for Minecraft 26.3 load.
+- Mods that replace Minecraft's renderer, such as Sodium, break how RiskOfCraft draws Minecraft's
+  blocks into Risk of Rain 2, so leave those out.
+- Keep a copy of the mods you add, in case an update or a reinstall resets the folder.
+
 ## Building from source
 
 - **Risk of Rain 2 plugin:** `dotnet build -c Release` in `ror2/`. It compiles against your own
