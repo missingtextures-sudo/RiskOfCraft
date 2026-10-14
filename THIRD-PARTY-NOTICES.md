@@ -31,13 +31,14 @@ into the game folder when no mod loader is there yet.
 |---|---|---|
 | Prism Launcher 11.1.1 (unmodified portable Windows build) | GPL-3.0 | https://github.com/PrismLauncher/PrismLauncher/tree/11.1.1 |
 | Fabric API 0.162.0+26.3 | Apache-2.0 | https://github.com/FabricMC/fabric |
+| Microsoft Build of OpenJDK 25.0.1 (Mojang's Java runtime for Minecraft, unmodified, in `Prism/java`) | GPL-2.0 with the Classpath Exception (full texts in its `legal` folder) | https://github.com/microsoft/openjdk |
 
 The bundle carries Prism Launcher's full license text as `Prism/LICENSE-PrismLauncher.txt`.
 
 ## Not included
 
-Minecraft, Java and Fabric Loader aren't included. Prism Launcher downloads them from Mojang,
-the Java vendor and FabricMC after the player signs in with a Microsoft account that owns
+Minecraft and Fabric Loader aren't included. Prism Launcher downloads them from Mojang and
+FabricMC after the player signs in with a Microsoft account that owns
 Minecraft: Java Edition. Risk of Rain 2 isn't included either: every texture, sound and model
 comes from each player's own copies of the two games.
 

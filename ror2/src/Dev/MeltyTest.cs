@@ -91,17 +91,30 @@ internal sealed class MeltyTest
     /// <summary>
     /// Melty ends a run by closing Minecraft, then Risk of Rain 2, which ignores the polite close and is only
     /// force-closed 6 s later. Melty starts the next run 10 s after that, and a game seen closing that late still
-    /// counts as running, so the next run is never launched. A test game whose checks are all in ends as soon as
-    /// its Minecraft has gone (the link also drops for a moment while Minecraft loads, before any check).
+    /// counts as running, so the next run is never launched. A test game whose checks are all in quits as soon as
+    /// its Minecraft has gone (the link also drops for a moment while Minecraft loads, before any check). It quits
+    /// the way a player does, so Melty's crash check covers the game's shutdown; still open 4 s later, it's ended.
     /// </summary>
     public static void ExitNow()
     {
-        Plugin.Log.LogInfo("melty test: Minecraft closed after the checks; ending the game now");
+        Plugin.Log.LogInfo("melty test: Minecraft closed after the checks; quitting the game");
+        FlushLog();
+        new System.Threading.Thread(() =>
+        {
+            System.Threading.Thread.Sleep(4000);
+            Plugin.Log.LogWarning("melty test: the game is still open 4 s after quitting; ending it");
+            FlushLog();
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+        }) { IsBackground = true }.Start();
+        UnityEngine.Application.Quit();
+    }
+
+    private static void FlushLog()
+    {
         foreach (BepInEx.Logging.ILogListener listener in BepInEx.Logging.Logger.Listeners)
         {
             (listener as BepInEx.Logging.DiskLogListener)?.LogWriter?.Flush();
         }
-        System.Diagnostics.Process.GetCurrentProcess().Kill();
     }
 
     /// <summary>The test run: start a run, then check what RiskOfCraft is for.</summary>

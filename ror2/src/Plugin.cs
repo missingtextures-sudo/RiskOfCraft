@@ -37,7 +37,7 @@ public sealed class Plugin : BaseUnityPlugin
 {
     public const string Id = "com.riskofcraft.riskofcraft";
     public const string Name = "RiskOfCraft";
-    public const string Version = "0.2.0";
+    public const string Version = "0.2.1";
 
     internal static ManualLogSource Log { get; private set; } = null!;
     internal static Plugin Instance { get; private set; } = null!;
@@ -80,6 +80,7 @@ public sealed class Plugin : BaseUnityPlugin
     private ConfigEntry<bool> startMinecraft = null!;
     private Harmony? harmony;
     private bool active;
+    private bool quitting;
     private bool linked;
     private uint guestPid;
     private Proto.GuestState guest;
@@ -117,6 +118,7 @@ public sealed class Plugin : BaseUnityPlugin
             return;
         }
         active = true;
+        Application.quitting += () => quitting = true;
         Commands.Init(Link);
         Follower = new Follower(Link);
         InputBridge = new InputBridge(Link, Camera, Config);
@@ -183,7 +185,9 @@ public sealed class Plugin : BaseUnityPlugin
 
     private void OnDestroy()
     {
-        if (!active)
+        // When the game quits, Windows frees the patches and the shared memory with the process. Unpatching
+        // and unmapping while Unity tears its objects down crashed players' games in ntdll on the way out.
+        if (!active || quitting)
         {
             return;
         }

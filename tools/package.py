@@ -4,8 +4,8 @@
 
     RiskOfCraft-<v>.zip            the Risk of Rain 2 plugin: plugins/RiskOfCraft/{RiskOfCraft.dll, riskofcraft_link.bin (the Rust link DLL), ...}
     RiskOfCraft-Minecraft-<v>.zip  portable Prism Launcher with a ready "RiskOfCraft" instance (Minecraft 26.3,
-                                   Fabric Loader, Fabric API, the RiskOfCraft guest mod); Prism downloads
-                                   Minecraft, Fabric and Java after the player signs in once
+                                   Fabric Loader, Fabric API, the RiskOfCraft guest mod, Java 25); Prism
+                                   downloads Minecraft and Fabric after the player signs in once
 
 <cache-dir> holds the pinned downloads (checked against their hashes here).
 """
@@ -16,7 +16,7 @@ import sys
 import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 VC_RUNTIME = ["vcruntime140.dll", "vcruntime140_1.dll", "msvcp140.dll", "msvcp140_1.dll", "msvcp140_2.dll"]
 GUEST_JAR = "riskofcraft-guest-0.1.0.jar"
 # Optional compatibility mixins for mods RiskOfCraft doesn't ship: without their target Minecraft
@@ -41,6 +41,7 @@ PRISM_ZIP = "PrismLauncher-Windows-MSVC-Portable-11.1.1.zip"
 PRISM_SHA256 = "ab35a770fb06d89d2ccc098079db5db329fb4e68f42b72babd8b095efde3d2d7"
 FABRIC_API = "fabric-api-0.162.0+26.3.jar"
 INSTANCE = "RiskOfCraft"
+JAVA_RUNTIME = "java-runtime-epsilon"  # Mojang's Java 25 (Microsoft Build of OpenJDK), the one Prism downloads for 26.3
 
 
 def sha256(path):
@@ -135,7 +136,10 @@ def main():
                   f"  License: {m['license']}\n  Source:  {m['source'] or m['page']}\n\n" for m in extra_mods)
         + "Microsoft Visual C++ runtime (vcruntime140*.dll, msvcp140*.dll in this folder)\n"
         "  Redistributed beside Prism Launcher as Microsoft's Visual C++ Redistributable terms allow,\n"
-        "  so Prism starts on PCs without the Visual C++ Redistributable installed.\n"
+        "  so Prism starts on PCs without the Visual C++ Redistributable installed.\n\n"
+        f"Microsoft Build of OpenJDK 25.0.1 (java/{JAVA_RUNTIME}, unmodified; Mojang's Java runtime for Minecraft)\n"
+        "  License: GNU General Public License v2.0 with the Classpath Exception (full texts in its legal folder)\n"
+        "  Source:  https://github.com/microsoft/openjdk\n"
     )
     bundle = os.path.join(dist, f"RiskOfCraft-Minecraft-{VERSION}.zip")
     with zipfile.ZipFile(bundle, "w") as z, zipfile.ZipFile(prism) as p:
@@ -164,7 +168,16 @@ def main():
         # could leave the old jar next to it (Melty keeps the runtime-data folder), and Fabric refuses
         # to start with the same mod twice.
         add_file(z, f"Prism/instances/{INSTANCE}/.minecraft/mods/{GUEST_JAR}", guest)
-        add_bytes(z, "bundle-version.txt", f"RiskOfCraft {VERSION}, Prism Launcher 11.1.1, {FABRIC_API}".encode())
+        # The Java Minecraft 26.3 runs on, where Prism would download it: a Java whose first download was
+        # cut short can't start and Prism never repairs it ("Could not start java!"). Shipping it means
+        # every install or update puts a whole one back.
+        java = os.path.join(cache, "java", JAVA_RUNTIME)
+        assert 'JAVA_VERSION="25.0.1"' in open(os.path.join(java, "release")).read(), f"{java} isn't Java 25.0.1"
+        for folder, _, files in os.walk(java):
+            for f in files:
+                path = os.path.join(folder, f)
+                add_file(z, "Prism/java/" + os.path.relpath(path, os.path.dirname(java)).replace(os.sep, "/"), path)
+        add_bytes(z, "bundle-version.txt", f"RiskOfCraft {VERSION}, Prism Launcher 11.1.1, {FABRIC_API}, {JAVA_RUNTIME} 25.0.1".encode())
 
     for name in sorted(os.listdir(dist)):
         path = os.path.join(dist, name)

@@ -18,7 +18,7 @@ RiskOfCraft lets you play Risk of Rain 2 as a real Minecraft player. You need:
    - Accept its setup defaults.
    - Add your Microsoft account: **Accounts > Manage Accounts > Add Microsoft**.
    - Close Prism Launcher. The installer finishes when it closes.
-4. Start **Risk of Rain 2 from Steam**. RiskOfCraft starts its Minecraft by itself. The first start downloads Minecraft 26.3, Fabric and Java, which takes a few minutes.
+4. Start **Risk of Rain 2 from Steam**. RiskOfCraft starts its Minecraft by itself. The first start downloads Minecraft 26.3 and Fabric, which takes a few minutes.
 
 To update, unzip the new release and run `Install RiskOfCraft.bat` again. Your Minecraft world and sign-in are kept.
 

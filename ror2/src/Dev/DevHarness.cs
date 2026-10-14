@@ -145,6 +145,9 @@ internal sealed class DevHarness
             case "sleep":
                 sleepUntil = Time.unscaledTime + F(a[1]);
                 break;
+            case "quit":
+                Application.Quit();
+                break;
             case "shot":
             {
                 string path = Path.Combine(shotDir, (a.Length > 1 ? a[1] : DateTime.Now.ToString("HHmmss")) + ".png");

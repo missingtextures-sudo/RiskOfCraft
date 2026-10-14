@@ -1,6 +1,6 @@
 [package]
 name = "riskofcraft_link"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 description = "The shared-memory link between Risk of Rain 2 (host) and Minecraft (guest) for RiskOfCraft"
 license = "MIT"

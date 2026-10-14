@@ -93,7 +93,7 @@ RiskOfCraft's Minecraft is its own Prism Launcher instance (Minecraft 26.3 with 
 
 | Mod | Version | What it's for |
 |---|---|---|
-| RiskOfCraft (`riskofcraft-guest`) | 0.2.0 | The Minecraft side of RiskOfCraft. Required |
+| RiskOfCraft (`riskofcraft-guest`) | 0.2.1 | The Minecraft side of RiskOfCraft. Required |
 | Fabric API | 0.162.0+26.3 | Required by RiskOfCraft and the other mods |
 | Mouse Tweaks | 2.31 | Better mouse handling in inventories |
 | AppleSkin | 3.0.10 | Shows food, saturation and exhaustion on the HUD |
@@ -136,7 +136,7 @@ The design sheets in `design/` drive generated code: after changing them, run
 
 - Risk of Rain 2, with BepInEx 5.
 - A Microsoft account that owns Minecraft: Java Edition. The first start opens Prism Launcher
-  once so you can sign in. Prism then downloads Minecraft 26.3, Fabric and Java by itself.
+  once so you can sign in. Prism then downloads Minecraft 26.3 and Fabric by itself (Java comes with RiskOfCraft).
 - About 3 GB of extra RAM and 1.5 GB of disk for Minecraft.
 
 ## Known limits
